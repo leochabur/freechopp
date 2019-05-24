@@ -23,6 +23,8 @@ use Mant\AlmacenBundle\Entity\movimientos\FacturaVenta;
 use Mant\AlmacenBundle\Entity\finanzas\CuentaCorriente;
 use Mant\AlmacenBundle\Entity\finanzas\MovimientoDebito;
 use Mant\AlmacenBundle\Entity\movimientos\OrdenCompra;
+use Mant\AlmacenBundle\Entity\movimientos\Cliente;
+use Mant\AlmacenBundle\Form\movimientos\ClienteType;
 use Mant\AlmacenBundle\Form\movimientos\OrdenCompraType;
 use Mant\AlmacenBundle\Form\movimientos\FacturaVentaType;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -226,5 +228,30 @@ class VentasController extends Controller
         catch (\Exception $e) {return new JsonResponse(array('status' => false, 'msge'=>$e->getMessage()));}                            
     }
 
+    public function altaClienteAction()
+    {
+        $cliente = new Cliente();
+        $formCliente = $this->createFormAltaCliente($cliente);
+        return $this->render('MantAlmacenBundle:ventas:addCliente.html.twig', array('form'=>$formCliente->createView()));  
+    }    
+
+    private function createFormAltaCliente($cliente)
+    {
+        return $this->createForm(new ClienteType(), $cliente, array('action'=>$this->generateUrl('mant_almacen_alta_cliente_venta_procesar'), 'method'=>'POST', 'user' => $this->getUser()));
+    }
+
+    public function altaClienteProcesarAction(Request $request)
+    {
+        $cliente = new Cliente();
+        $form = $this->createFormAltaCliente($cliente);
+        $form->handleRequest($request);
+        if ($form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cliente);
+            $em->flush();
+            return $this->redirectToRoute('mant_almacen_alta_cliente_venta');
+        }
+        return $this->render('MantAlmacenBundle:ventas:addCliente.html.twig', array('form'=>$formCliente->createView()));         
+    }
 
 }

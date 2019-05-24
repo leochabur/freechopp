@@ -1,3 +1,12 @@
+mant_almacen_alta_cliente_venta:
+    path:     /altacliente
+    defaults: { _controller: MantAlmacenBundle:Ventas:altaCliente }    
+
+mant_almacen_alta_cliente_venta_procesar:
+    path:     /addProcesar
+    defaults: { _controller: MantAlmacenBundle:Ventas:altaClienteProcesar }
+    methods: POST       
+
 mant_almacen_factura_venta:
     path:     /factura
     defaults: { _controller: MantAlmacenBundle:Ventas:facturaVenta }    
@@ -26,4 +35,4 @@ mant_almacen_view_change_precios:
 
 mant_almacen_update_price:
     path:     /updprice/{id}
-    defaults: { _controller: MantAlmacenBundle:Ventas:updatePrice }          
+    defaults: { _controller: MantAlmacenBundle:Ventas:updatePrice }  

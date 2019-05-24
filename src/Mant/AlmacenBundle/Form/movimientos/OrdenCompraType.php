@@ -29,7 +29,11 @@ class OrdenCompraType extends AbstractType
                     'data_class' => 'Mant\AlmacenBundle\Entity\movimientos\OrdenCompra',
                 ))        
                 ->add('almacenDestino', 'entity', array('class' => 'MantAlmacenBundle:Almacen','choices' => array($deposito->getId() => $deposito)))                
-                ->add('proveedor')    
+                ->add('proveedor', 'entity', array('class' => 'MantAlmacenBundle:movimientos\Proveedor',
+                                            'query_builder' => function(ProveedorRepository $er) use ($type){
+                                                                                               
+                                                                                                return $er->createQueryBuilder('u');
+                                                                                             }))  
                 ->add('numero')                   
                 ->add('save', 'submit', array('label'=>'Agregar Articulos al Movimiento'));               
     }

@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Proveedor
  *
  * @ORM\Table(name="proveedores")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Mant\AlmacenBundle\Entity\movimientos\ProveedorRepository")
  */
 class Proveedor extends EnteComercial
 {
