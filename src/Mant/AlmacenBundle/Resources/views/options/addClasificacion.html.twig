@@ -1,0 +1,24 @@
+{% include('ppal.html.twig') %}
+<div class="container">
+	{% for message in app.session.flashBag.get('response') %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+   <div class="col-md-6">
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+	    <h3>Nueva Clasificacion de Articulo</h3>
+		<div class="form-group">
+			{{	form_label(form.clasificacion)	}}
+			{{	form_widget(form.clasificacion, {'attr':{'class' : 'form-control'}})}}
+			<span class="text-danger">
+				{{ form_errors(form.clasificacion) }}
+			</span>
+		</div>
+		<p>
+			{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+		</p>
+
+	{{ form_end(form)}} 
+  </div>
+</div>

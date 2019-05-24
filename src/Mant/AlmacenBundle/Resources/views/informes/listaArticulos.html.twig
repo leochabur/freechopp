@@ -1,0 +1,78 @@
+{% extends('ppal.html.twig') %}
+{% block stylesheets %}
+ 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/estilos.css')}}">
+ 	{{ parent() }}
+{% endblock %}
+{% block body %}
+{{ parent() }}
+<div class="container">
+   <div>
+   	<div><h4>Seleccione el Deposito</h4></div>
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+		<div class="form-group row">
+			<div class="col-6">
+						{{	form_widget(form.deposito , {'attr':{'class' : 'form-control'}})}}
+						<span class="text-danger">
+							{{ form_errors(form.deposito ) }}
+						</span>
+			</div>
+			<div class="col-3">
+				{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+			</div>			
+		</div>
+
+
+
+	{{ form_end(form)}} 
+  </div>
+{% if articulos is defined %}
+	<input type="text" class="search form-control col-4" id="search" placeholder="Codigo/Descripcion">
+	<table class="table table-striped table-hover table-bordered results table-sm estilo1">
+		<thead>
+			<tr>
+	            <th>Codigo</th>
+	            <th>Descripcion</th>
+	            <th>Clasificacion</th>	  
+	            <th>Unidad</th>	
+	            <th>Marca</th>
+	            <th>Accion</th>
+			</tr>
+		</thead>
+		<tbody>
+	        {% for articulo in articulos %}
+	            <tr class="finder">
+	                <td>{{ articulo.articuloMarca.articulo.codigo|upper }}</td>
+	                <td>{{ articulo.articuloMarca.articulo.descripcion|title }}</td>
+	                <td>{{ articulo.articuloMarca.articulo.clasificacion|title }}</td>	   
+	                <td>{{ articulo.articuloMarca.articulo.unidad|title }}</td>		 
+	               	<td>{{ articulo.articuloMarca.marca|title }}</td>	
+	                <td>
+	                	{{  form_start(forms[articulo.id], {'attr' : {'class' : 'action'}}) }}
+	                	{% if articulo.activo %}
+	                		{{	form_widget(forms[articulo.id].action, {'attr':{'class' : 'btn btn-warning btn-sm'}}) }}
+	                	{% else %}
+	                		{{	form_widget(forms[articulo.id].action, {'attr':{'class' : ' btn btn-success btn-sm'}}) }}
+	                	{% endif %}
+	                	{{	form_end(forms[articulo.id]) }}
+	                </td>
+	            </tr>
+	        {% endfor %}
+		</tbody>
+	</table>  
+{% endif %}
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+	<script src="{{ asset('bundles/mantalmacen/js/listArticles.js') }}"></script>
+	<script>
+		$(document).ready(function(){
+			$('.action').submit(function(event){
+												event.preventDefault();
+												$.post($(this).attr('action'), function(data){
+													alert(data.msge);
+												});
+			});
+		});
+	</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends('ppal.html.twig') %}
+{% block stylesheets %}
+	{{ parent() }}
+ 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/movimientos/addArticulosMovimiento.css')}}">
+ 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/estilos.css')}}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+   <div class="card">
+    <div class="card-body">
+    	<h6>Items Pedidos</h6>
+    	<table class="table table-striped table-hover table-bordered table-sm assign estilo1">
+					<thead>
+						<tr>
+                            <th>Codigo</th>
+                            <th>Descripcion</th>
+                            <th>Cantidad</th>
+                            <th>Unitario</th>           
+                            <th>Total</th> 
+                            <th class="text-right">Cantidad-Precio Unitario / Guardar</th>
+						</tr>
+					</thead>
+					<tbody>
+				        {% for item in items %}
+                            <tr id="{{ item.item.id }}" class="trtable">
+                                <td>{{ item.item.articulo.articulo.codigo|upper }}</td>
+                                <td>{{ item.item.articulo.articulo.descripcion|title }}</td>
+                                <td>{{ item.item.cantidad|number_format(2, '.', '')  }}</td>                                
+                                <td>{{ item.item.precioUnitario|number_format(2, '.', '')  }}</td>       
+                                <td>{{ item.item.precioTotal|number_format(2, '.', '')  }}</td>
+                                <td>
+									{{ 	form_start(forms[item.item.id], {'attr': {'class':'fact'}}) }}
+									<div class="form-row">
+									{{	form_widget(forms[item.item.id].cantidad, {'attr':{'class' : 'form-control form-control-sm col-2 offset-md-6'}})}}
+									{{	form_widget(forms[item.item.id].unitario, {'attr':{'class' : 'form-control form-control-sm col-2'}})}}									
+									{{ form_widget(forms[item.item.id].add, {'attr':{'class' : 'btn btn-success btn-add col-1 btn-sm'}}) }}	
+									</div>	
+									{{ form_end(forms[item.item.id]) }}
+                                </td>
+                            </tr>
+				        {% endfor %}						
+					</tbody>
+		</table>
+    </div>
+  </div> 
+
+</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+		$('.fact').submit(function(event){
+											event.preventDefault();
+											var form = $(this);
+											$.post(form.attr('action'),
+												   form.serialize(),
+												   function(data){
+												   					console.log(data);
+												   					if (data.status){
+												   						location.reload();
+												   					}
+												   					else{
+												   						alert(data.msge);
+												   					}
+												   					
+												   });
+
+		});
+	</script>
+	
+{% endblock %}

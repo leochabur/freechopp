@@ -1,0 +1,98 @@
+{% extends('ppal.html.twig') %}
+{% block stylesheets %}
+ 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/estilos.css')}}">
+ 	{{ parent() }}
+{% endblock %}
+{% block body %}
+{{ parent() }}
+<div class="container">
+   <div>
+   	<div><h4>Actualizar lista precios</h4></div>
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+		<div class="form-group row">
+			<div class="col-6">
+						{{	form_widget(form.deposito , {'attr':{'class' : 'form-control'}})}}
+						<span class="text-danger">
+							{{ form_errors(form.deposito ) }}
+						</span>
+			</div>
+			<div class="col-3">
+				{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+			</div>			
+		</div>
+
+
+
+	{{ form_end(form)}} 
+  </div>
+{% if articulos is defined %}
+	<input type="text" class="search form-control col-4" id="search" placeholder="Codigo/Descripcion">
+	<table class="table table-striped table-hover table-bordered results table-sm estilo1">
+		<thead>
+			<tr>
+	            <th>Descripcion</th>
+	            <th>Cod. Barras</th>
+	            <th>Precio Actual Calculo</th>
+	            <th>Precio Venta Actual</th>	            
+	            <th>Nuevo Precio Compra</th>	    
+	            <th>Precio Venta Actualizado</th>	  
+	            <th>Actualizar</th>       
+			</tr>
+		</thead>
+		<tbody>
+	        {% for articulo in articulos %}
+	            <tr class="finder">
+	                <td>{{ articulo.articulo.descripcion|title }}</td>
+	                <td>{{ articulo.articulo.codBarras|upper }}</td>	                
+	                <td class="text-right">{{ articulo.precioCompra|number_format(2, '.', '')  }}</td>	   
+	                <td class="text-right">{{ articulo.precioVenta|number_format(2, '.', '')  }}</td>	   	                
+	                <td class="text-right">{{ articulo.ultPrecioCompra|number_format(2, '.', '')  }}</td>
+	                <td class="text-right">{{ articulo.precioVentaActualizado|number_format(2, '.', '')  }}</td>
+	                <td><a href="{{path("mant_almacen_update_price",{'id': articulo.id})}}" class="btn btn-warning btn-sm action">Actualizar</a></td>
+	            </tr>
+	        {% endfor %}
+		</tbody>
+	</table>  
+{% endif %}
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+	<script src="{{ asset('bundles/mantalmacen/js/listArticles.js') }}"></script>
+	<script>
+		$(document).ready(function(){
+			$('.action').click(function(event){
+												event.preventDefault();
+												var a = $(this);
+						                       bootbox.confirm({
+					                                            message: "Seguro realizar la modificacion?",
+					                                            buttons: {
+					                                                confirm: {
+					                                                    label: 'Si',
+					                                                    className: 'btn-success'
+					                                                },
+					                                                cancel: {
+					                                                    label: 'No',
+					                                                    className: 'btn-danger'
+					                                                }
+					                                            },
+					                                            callback: function (result) {
+					                                                if (result == true){
+																		$.post(a.attr('href'), {a:0}, function(data){
+																			if (data.status)
+																			{
+																				location.reload();
+																			}
+																			else{
+																				alert(data.msge);
+																			}
+																		});
+					                                                }
+					                                            }
+					                                        });  
+
+
+			});
+		});
+	</script>
+{% endblock %}

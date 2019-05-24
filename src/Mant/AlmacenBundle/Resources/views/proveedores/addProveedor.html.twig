@@ -1,0 +1,42 @@
+{% include('ppal.html.twig') %}
+
+<div class="container">
+   <div class="col-md-6">
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+	    <h3>Nuevo Proveedor</h3>   
+		<div class="form-group">
+			{{	form_label(form.ente.razonSocial)	}}
+			{{	form_widget(form.ente.razonSocial, {'attr':{'class' : 'form-control'}})}}
+			<span class="text-danger">
+				{{ form_errors(form.ente.razonSocial) }}
+			</span>
+		</div>
+		<div class="form-group">
+			{{	form_label(form.ente.cuit)	}}
+			{{	form_widget(form.ente.cuit, {'attr':{'class' : 'form-control'}})}}
+			<span class="text-danger">
+				{{ form_errors(form.ente.cuit) }}
+			</span>
+		</div>			
+		<div class="form-group">
+			{{	form_label(form.ente.telefono)	}}
+			{{	form_widget(form.ente.telefono, {'attr':{'class' : 'form-control'}})}}
+			<span class="text-danger">
+				{{ form_errors(form.ente.telefono) }}
+			</span>
+		</div>		
+
+		<div class="form-group">
+			{{	form_label(form.ente.mail)	}}
+			{{	form_widget(form.ente.mail, {'attr':{'class' : 'form-control'}})}}
+			<span class="text-danger">
+				{{ form_errors(form.ente.mail) }}
+			</span>
+		</div>			
+		<p>
+			{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+		</p>
+
+	{{ form_end(form)}} 
+  </div>
+</div>

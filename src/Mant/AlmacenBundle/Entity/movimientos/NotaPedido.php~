@@ -1,0 +1,124 @@
+<?php
+
+namespace Mant\AlmacenBundle\Entity\movimientos;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+/**
+ * NotaPedido
+ *
+ * @ORM\Table(name="nota_pedido")
+ * @ORM\Entity
+ */
+class NotaPedido extends MovimientoStock
+{
+
+    /**
+    * @ORM\ManyToOne(targetEntity="Mant\AlmacenBundle\Entity\Almacen") 
+    * @ORM\JoinColumn(name="id_almacen_destino", referencedColumnName="id")
+    * @Assert\NotBlank(message="El campo no puede permanecer en blanco!")    * 
+    */   
+    private $almacenDestino;   
+
+    /**
+    * @ORM\ManyToOne(targetEntity="EnteComercial") 
+    * @ORM\JoinColumn(name="id_entecomercial", referencedColumnName="id")
+    * @Assert\NotBlank(message="El campo no puede permanecer en blanco!")    * 
+    */   
+    private $cliente;       
+
+     public function getInstance()
+     {
+        return 5;
+     }
+     
+     public function getAlmacenOrigenData()
+     {
+        return null;
+     }
+
+     public function getAlmacenDestinoData()
+     {
+        return $this->almacenDestino;
+     }
+
+     public function updateArticleItem(ItemMovimiento $item)
+     {
+
+     }
+
+     public function getProcesado()
+     {
+
+     }
+     public function setProcesado($procesado)
+     {
+
+     }
+     
+     public function getTipoFormulario()
+     {
+         return 'npc';
+     }
+
+     public function getDepositoAAfectar() 
+     {
+        return $this->almacenDestino;
+     }
+
+     public function getDepositoAutorizante()
+     {
+
+     }
+
+     public function getItemConfirmado()
+     {
+
+     }
+
+     public function marcarProcesado($procesado)
+     {
+
+     }
+
+     public function movimientoConfirmado()
+     {
+        return true;
+     }
+
+     public function verificarItem($item, $sRealOrigen, $sRealDestino, $stockEnTransito)
+     {
+
+     }
+
+     public function getNameProveedor()
+     {
+        return $this->cliente;
+     }
+
+     public function setAutorizacionFormulario()
+     {
+
+     }
+
+     public function getControlaStockPorMarca()
+     {
+
+     }
+
+     public function generaMovimientoCtaCte()
+     {
+        return false;
+     }
+
+     public function getEnteComercial()
+     {
+        return $this->cliente;
+     }
+
+    public function getDescripcionFormulario()
+    {
+        return "Nota de Pedido";
+    }
+
+}

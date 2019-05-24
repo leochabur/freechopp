@@ -1,0 +1,52 @@
+<div class="container">
+	
+	<div class="card">
+	  <div class="card-header">
+	  	<div class="row">
+	  		<div class='col-3'>{{ movimiento.getDescripcionFormulario | title }}</div>
+	  		<div class='col-3'>{{ movimiento.enteComercial | title }}</div>	  		
+	  	</div>
+	    
+	    
+	  </div>
+	  <div class="card-body row">
+	    <span class="card-text col-2 h7">{{ movimiento.fecha | date("m/d/Y") }}</span>
+		<span class="card-text col-3 h7">{% if movimiento.conceptoEntrada is defined %} {{ movimiento.conceptoEntrada | title }} {% endif %}</span>
+	    <span class="card-text col-4 h7"> {% if movimiento.almacenOrigen is defined %} {{ movimiento.almacenOrigen | title }} {% endif %}</span>
+		<span class="card-text col-3 h7"> {% if movimiento.almacenDestino is defined %} {{ movimiento.almacenDestino | title }} {% endif %}</span>		
+	  </div>
+	</div>
+	
+<div>
+				<table class="table table-striped table-hover table-bordered results table-sm estilo1">
+					<thead>
+						<tr>
+                            <th>Descripcion</th>
+                            <th>Cant. Solicitada</th>
+                            <th>Costo</th>
+                            <th>Importe Unitario</th>                                 
+                            <th>Importe Total</th>                               
+						</tr>
+					</thead>
+					<tbody>
+				        {% for item in movimiento.items  %}
+                            <tr data-id="{{ item.id }}">
+                                <td>{{ item.articulo.articulo.descripcion|title }}</td>
+                                <td class="text-right">{{ item.cantidad }}</td>
+                                <td class="text-right">{{ item.costoCompra }}</td>                                
+                                <td class="text-right">{{ item.precioUnitario }}</td>
+                                <td class="text-right">{{ item.precioTotal }}</td>                                                                   
+                            </tr>
+				        {% endfor %}
+					</tbody>
+				</table>
+	</div>
+</div>
+	
+	
+	
+	
+	
+	
+</div>
+

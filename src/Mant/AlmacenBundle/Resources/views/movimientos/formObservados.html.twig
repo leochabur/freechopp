@@ -1,0 +1,119 @@
+{% extends('ppal.html.twig') %}
+{% block stylesheets %}
+ 	{{ parent() }}
+ 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/estilos.css')}}">
+ <style>
+ 	 	.bootbox .modal-header{
+								display: block;
+ 	 						}
+ 	 	
+ </style>
+{% endblock %}
+{% block body %}
+{{ parent() }}
+<script>
+	  var observaciones = new Array();
+</script>
+<div class="container">
+	   	<div class="card">
+	  <div class="card-header">
+	     Formularios observados pendientes de resolver
+	  </div>
+	  <div class="card-body">
+	    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+    	<div class="row">
+
+			  <div class="col-3">
+				{{	form_widget(form.almacenes, {'attr':{'class' : 'form-control form-control-sm'}})}}
+			  </div>
+			  <div class="col-3">
+				{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success btn-sm btn-load'}})}}
+			  </div>
+		</div>
+		{{ form_end(form)}}
+	   </div>
+		{% for flash_message in app.session.flashbag.get('signerror') %}
+			<div class="alert alert-danger" role="alert">
+				{{ flash_message }}
+			</div>
+		{% endfor %}
+		{% for flash_message in app.session.flashbag.get('signok') %}
+			<div class="alert alert-success" role="alert">
+				{{ flash_message }}
+			</div>
+		{% endfor %}		
+		
+		{% if movimientos is defined %}
+				<table class="table table-striped table-bordered table-hover table-sm estilo1">
+					<thead>
+						<tr>
+                            <th scope="col">Nro. Form.</th>							
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Tipo Movimiento</th>
+                            <th scope="col">Proveedor</th>
+                            <th scope="col">Concepto</th>                            
+							<th scope="col">Deposito Origen</th>
+							<th scope="col">Deposito Destino</th>							
+                            <th scope="col">Firma 1</th>
+                            <th scope="col">Firma 2</th>
+                            <th></th>
+						</tr>
+					</thead>
+					<tbody>
+				        {% for movimiento in movimientos %}
+				        	<script>
+				        		observaciones[{{ movimiento.id}}] = new String('{{ movimiento.comentario }}');
+				        	</script>
+                            <tr data-id="{{ movimiento.id }}">
+                            	<td>{{ "%06d" | format(movimiento.numeroComprobante) }}</td>                                 	
+                                <td>{{ movimiento.fecha|date("d/m/Y") }}</td>
+                                <td>{{ movimiento.descripcionFormulario|title }}</td>
+ 								<td>{{ movimiento.nameProveedor|title }}</td>                                
+                                <td>{{ movimiento.conceptoEntrada|title }}</td>                                
+                                <td>{% if movimiento.almacenOrigen is defined %} {{ movimiento.almacenOrigen}} {% endif %}</td>
+                                <td>{% if movimiento.almacenDestino is defined %} {{ movimiento.almacenDestino}} {% endif %}</td>                                
+                                <td class="actions">
+                                	{{ movimiento.firmaUsuario1|title }}
+				                </td>
+				                <td>
+				                	{{ movimiento.firmaUsuario2|title }}
+				                </td>
+				                <td>	
+				                	<div>
+										{{ form_start(forms[movimiento.id]) }}
+										{{ form_widget(forms[movimiento.id].save, {'attr':{'class' : 'btn btn-warning btn-sm sing estilo1'}}) }}
+										<a href="{{ path('mant_almacen_view_det_forms_observados', { 'mov': movimiento.id }) }}" class='btn btn-success btn-sm view estilo1'>Detalle</a>
+										<a href="{{ path('mant_almacen_load_observacion_forms_observados', { 'mov': movimiento.id }) }}" data-nro="{{ "%06d" | format(movimiento.numeroComprobante) }}" data-tipo="{{ movimiento.descripcionFormulario }}" data-id="{{ movimiento.id }}" class='btn btn-primary btn-sm obs estilo1'>Observacion</a>										
+										{{ form_end(forms[movimiento.id]) }}
+									</div>
+								</td>
+                            </tr>
+				        {% endfor %}
+					</tbody>
+				</table>
+
+		{% endif %}
+</div>
+
+<div class="modal fade estilo1" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title estilo1">Detalle de documento</span>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+		
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('bundles/mantalmacen/js/movimientos/firmarObservado.js') }}"></script>
+{% endblock %}

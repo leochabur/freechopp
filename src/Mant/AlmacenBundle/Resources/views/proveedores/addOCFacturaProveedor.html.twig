@@ -1,0 +1,132 @@
+{% include('ppal.html.twig') %}
+{% block stylesheets %}
+ 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/movimientos/addArticulosMovimiento.css')}}">
+ 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/estilos.css')}}">
+{% endblock %}
+<div class="container">
+	
+	<div class="card">
+	  <div class="card-header">
+	  	<div class='row'>
+	  		<div class="col-4">
+		    		Proveedor: {{ factura.proveedor | title }}	  			
+	  		</div>
+		    <div class="col-4">
+		    		Deposito: {{ factura.almacen | title }}
+		    </div>
+  		</div>
+  	  </div>
+      <div class="card-body">
+      		<div class="row">
+      			<span class="card-text col-4">Fecha Factura: {{ factura.fechaFactura | date("d/m/Y")  }}</span>
+		  		<span class="card-text col-4">Nro Factura: {{factura.letraFactura}} {{"%04d" | format(factura.puntoVenta)}}-{{"%08d" | format(factura.numeroFactura)}}</span>
+      		</div>
+      		<div class="row">
+      			<span class="card-text col-4">Importe Factura: {{ factura.getImporteNeto | number_format(2, ',', '.') }}</span>
+		  		<span class="card-text col-4">Importe Aplicado: {{factura.montoAplicado | number_format(2, ',', '.') }}</span>
+      		</div>
+      </div>
+	</div>
+	<div class="card">
+	  <div class="card-header">
+	  	<div class='row'>
+	  		<div class="col-4">
+		    		Documentos aplicados a la factura	  			
+	  		</div>
+  		</div>
+  	  </div>
+      <div class="card-body row">
+	<table class="table table-striped table-hover table-bordered results table-sm estilo1">
+		<thead>
+			<tr>
+                <th>Fecha O.C.</th>
+                <th>Nro O.C.</th>
+                <th>Monto Total O.C.</th>
+                <th>Fecha Doc. Entrada</th>
+                <th>Nro Doc. Entrada</th>
+                <th>Monto Total Doc. Entrada</th>     
+                <th>Accion</th>
+			</tr>
+		</thead>
+		<tbody>
+	        {% for movimiento in factura.documentos %}
+                <tr data-id="{{ movimiento.id }}" class="trtable">
+                    <td>{{ movimiento.documentoAsociado.fecha | date("d/m/Y")  }}</td>
+                    <td>{{ "%06d" | format(movimiento.documentoAsociado.numeroComprobante) }}</td>
+                    <td class="text-right">$ {{ movimiento.documentoAsociado.importeTotal|number_format(2, ',', '.')  }}</td>  
+                    <td>{{ movimiento.fecha | date("d/m/Y")  }}</td>
+                    <td>{{ "%06d" | format(movimiento.numeroComprobante) }}</td>                    
+                    <td class="text-right">$ {{ movimiento.importeTotal|number_format(2, ',', '.')  }}</td> 
+                    <td class="text-center">
+                    	{{ form_start(delete[movimiento.id], {'attr': {'class':'frmaddoc'}}) }}
+                    	{{ form_widget(delete[movimiento.id].add, {'attr':{'class' : 'btn btn-warning btn-sm'}}) }}	
+                    	{{ form_end(delete[movimiento.id]) }}                    	
+                    </td>                       
+                </tr>
+	        {% endfor %}
+		</tbody>
+	</table>
+      </div>
+	</div>
+
+			
+	<div class="card">
+	  <div class="card-header">
+	  	<div class='row'>
+	  		<div class="col-4">
+		    		Documentos pendientes de aplicar  			
+	  		</div>
+  		</div>
+  	  </div>
+      <div class="card-body row">
+			<table class="table table-striped table-hover table-bordered results table-sm estilo1">
+				<thead>
+					<tr>
+		                <th>Fecha O.C.</th>
+		                <th>Nro O.C.</th>
+		                <th>Monto Total O.C.</th>
+		                <th>Fecha Doc. Entrada</th>
+		                <th>Nro Doc. Entrada</th>
+		                <th>Monto Total Doc. Entrada</th>     
+		                <th>Accion</th>
+					</tr>
+				</thead>
+				<tbody>
+			        {% for movimiento in movimientos %}
+		                <tr data-id="{{ movimiento.id }}" class="trtable">
+		                    <td>{{ movimiento.documentoAsociado.fecha | date("d/m/Y")  }}</td>
+		                    <td>{{ "%06d" | format(movimiento.documentoAsociado.numeroComprobante) }}</td>
+		                    <td class="text-right">$ {{ movimiento.documentoAsociado.importeTotal|number_format(2, ',', '.')  }}</td>  
+		                    <td>{{ movimiento.fecha | date("d/m/Y")  }}</td>
+		                    <td>{{ "%06d" | format(movimiento.numeroComprobante) }}</td>                    
+		                    <td class="text-right">$ {{ movimiento.importeTotal|number_format(2, ',', '.')  }}</td> 
+		                    <td class="text-center">
+		                    	{{ form_start(forms[movimiento.id], {'attr': {'class':'frmaddoc'}}) }}
+		                    	{{ form_widget(forms[movimiento.id].add, {'attr':{'class' : 'btn btn-success btn-sm'}}) }}	
+		                    	{{ form_end(forms[movimiento.id]) }}
+		                    </td>                       
+		                </tr>
+			        {% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{{ 	form_start(formFact, {'attr': {'class':'frmcancel'}}) }}
+	<div class="row">
+		<div class="col-md-2">
+			{{ form_widget(formFact.cancel, {'attr':{'class' : 'btn btn-danger'}}) }}	
+		</div>
+		<div class="col-md-2">			
+			{{ form_widget(formFact.susp, {'attr':{'class' : 'btn btn-secondary'}}) }}	
+		</div>		
+		<div class="col-md-2">			
+			{{ form_widget(formFact.save, {'attr':{'class' : 'btn btn-primary'}}) }}	
+		</div>
+	</div>
+	{{ form_end(formFact) }}					
+
+</div>
+{% block javascripts %}
+	<script src="{{ asset('bundles/mantalmacen/js/finanzas/facturaProveedor.js') }}"></script>
+	
+{% endblock %}

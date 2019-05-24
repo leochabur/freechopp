@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
+
+  <div class="collapse navbar-collapse container" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    {% if is_granted('ROLE_ADMIN') %}
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Configuracion
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_add_articulo')}}">Nuevo Articulo</a>
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_add_clasificacion')}}">Nueva Clasificacion</a>           
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_addAlmacen')}}">Nuevo Deposito</a>               
+          </div>
+      </li>
+    {% endif  %}
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Movimientos Stock
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_entrada_stock')}}">Entrada Stock</a>
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_salida_stock')}}">Salida Stock</a>          
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_view_documents')}}">Ver Formularios Cargados</a> 
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_formularios_en_pausa')}}">Ver Formularios Pausados</a>             
+            {% if is_granted('ROLE_ADMIN') %}
+              <a class="dropdown-item btn" href="{{ path('mant_almacen_formularios_observados')}}">Ver Formularios Observados</a>      
+            {% endif %}
+          </div>
+      </li>      
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Ventas
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_factura_venta')}}">Nueva Factura</a>   
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_nota_pedido')}}">Nueva Nota Pedido</a>       
+            <a class="dropdown-item btn" href="{{ path('mant_set_stock_minimo_maximo')}}">Modificar Parametros Venta</a>                         
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_view_change_precios')}}">Actualizar Lista Precios</a>                                
+          </div>
+      </li>           
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Proveedores
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item btn" href="{{ path('proveedores_add')}}">Alta de Proveedor</a>
+            <a class="dropdown-item btn" href="{{ path('mant_almacen_orden_compra')}}">Cargar Orden de Compra</a>               
+          </div>
+      </li>           
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Stock
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ path('mant_almacen_stock_por_deposito')}}">Ver Existencias</a>
+            {% if is_granted('ROLE_ADMIN') %}
+              <a class="dropdown-item" href="{{ path('mant_almacen_list_articulos')}}">Cargar Existencias Iniciales</a>
+              <a class="dropdown-item" href="{{ path('mant_set_stock_minimo_maximo')}}">Configurar Stock Max/Min</a>        
+              {% endif  %}
+          </div>        
+      </li>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Informes
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ path('mant_almacen_informes_listado_articulos')}}">Listado Articulos</a>            
+            <a class="dropdown-item" href="{{ path('mant_almacen_informes_articulos_movimientos')}}">Movimiento Articulos</a>
+          </div>        
+      </li> 
+      {% if is_granted('ROLE_SUPER_ADMIN') %}
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Usuarios
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item btn" href="{{ path('gestion_usuarios_add')}}">Alta de Usuario</a>
+            <a class="dropdown-item btn" href="{{ path('gestion_usuarios_listar')}}">Ver Usuarios</a>
+          </div>
+      </li>          
+      {% endif %}
+    </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{{ path('gestion_usuarios_logout')}}"><span class="glyphicon glyphicon-user"></span> Cerrar Sesion</a></li>
+        </ul>
+  </div>
+</nav>

@@ -1,0 +1,19 @@
+mant_almacen_informes_articulos_movimientos:
+    path:     /ctacteart
+    defaults: { _controller: MantAlmacenBundle:Informes:ctaCteArticulo }    
+    methods: [POST, GET]     
+    
+mant_almacen_informes_view_ctacte_articulo:
+    path:     /viewart/{art}/{dep}
+    defaults: { _controller: MantAlmacenBundle:Informes:viewResumenArticulo }    
+    methods: [POST]   
+    
+mant_almacen_informes_listado_articulos:
+    path:     /listart
+    defaults: { _controller: MantAlmacenBundle:Informes:listadoArticulos }    
+    methods: [GET, POST]
+    
+mant_almacen_activar_desactivar_articulo:
+    path:     /desac/{art}
+    defaults: { _controller: MantAlmacenBundle:Informes:activarDesactivarArticulo }    
+    methods: [GET, POST]    

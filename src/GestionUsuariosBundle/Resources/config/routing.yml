@@ -1,0 +1,49 @@
+gestion_usuarios_add:
+    path:     /usuarios/add
+    defaults: { _controller: GestionUsuariosBundle:Usuario:add }
+    
+gestion_usuarios_create:
+    path:     /usuarios/create
+    defaults: { _controller: GestionUsuariosBundle:Usuario:create }
+    methods: POST
+    
+gestion_usuarios_homepage:
+    path:     /home
+    defaults: { _controller: GestionUsuariosBundle:Usuario:home }
+
+gestion_usuarios_login:
+    path:     /login
+    defaults: { _controller: GestionUsuariosBundle:Security:login }
+    
+gestion_usuarios_check:
+    path:     /login_check
+    defaults: { _controller: GestionUsuariosBundle:Security:loginCheck }
+    
+gestion_usuarios_logout:
+    path:     /logout
+    
+gestion_usuarios_listar:
+    path:     /usuarios/listuser
+    defaults: { _controller: GestionUsuariosBundle:Usuario:listar }
+
+gestion_usuarios_view:
+    path:     /viewuser/{user}
+    defaults: { _controller: GestionUsuariosBundle:Usuario:view }
+    
+gestion_usuarios_quitar_deposito:
+    path:     /deldepo/{user}/{id}
+    defaults: { _controller: GestionUsuariosBundle:Usuario:deleteDeposito }
+    
+gestion_usuarios_quitar_role:
+    path:     /delrole/{user}/{id}
+    defaults: { _controller: GestionUsuariosBundle:Usuario:deleteRole }
+    
+gestion_usuarios_add_deposito:
+    path:     /addDepo/{user}
+    defaults: { _controller: GestionUsuariosBundle:Usuario:addDeposito }
+    methods: POST
+    
+gestion_usuarios_add_role:
+    path:     /addRole/{user}
+    defaults: { _controller: GestionUsuariosBundle:Usuario:addRole }
+    methods: POST

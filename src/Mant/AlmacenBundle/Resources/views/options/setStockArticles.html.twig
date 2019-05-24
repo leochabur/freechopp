@@ -1,0 +1,47 @@
+{% include('ppal.html.twig') %}
+<div class="container">
+    <h3>Stock Articulos</h3>
+    	<div class="row">
+			{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}   
+			<div class="col-md-3">
+				{{	form_widget(form.almacenes, {'attr':{'class' : 'form-control'}})}}
+			</div>
+			<div class="col-md-3">
+				{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+			</div>
+			{{ form_end(form)}} 
+		</div>
+		<br>
+		
+		{% if articulos is defined %}
+				<table class="table table-striped table-hover table-bordered table-sm">
+					<thead>
+						<tr>
+                            <th>Codigo</th>
+                            <th>Descripcion</th>
+							<th>Clasificacion</th>
+							<th>Unidad</th>							
+                            <th>Stock</th>
+                            <th>Accion</th>
+						</tr>
+					</thead>
+					<tbody>
+				        {% for articulo in articulos %}
+                            <tr>
+                                <td>{{ articulo.codigo|upper }}</td>
+                                <td>{{ articulo.descripcion|title }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ articulo.stock  }}</td>
+                                <td><a href="{{path("gestion_mant_edit_articulo_base",{'id': articulo.id})}}" class="btn btn-defaut btn-sm">Modificar</a></td>
+                            </tr>
+				        {% endfor %}
+					</tbody>
+				</table>
+		{% endif %}
+{% block javascripts %}
+
+<script src="{{ asset('bundles/mantalmacen/js/listArticles.js') }}"></script>
+
+{% endblock %}
+</div>

@@ -1,0 +1,71 @@
+{% extends('ppal.html.twig') %}
+{% block stylesheets %}
+	{{ parent() }}
+ 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/estilos.css')}}">
+{% endblock %}
+{% block body %}
+{{ parent()  }}
+<div class="container">
+	<div class="card">
+	  <div class="card-header">
+	     Modificar Stock Inicial 
+	  </div>
+	  <div class="card-body">
+		{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+		
+			<div class="form-group row">
+				{{	form_widget(form.almacenes , {'attr':{'class' : 'form-control form-control-sm col-4'}})}}
+				{{	form_widget(form.save , {'attr':{'class' : 'btn btn-success btn-sm col-2'}})}}
+			</div>		
+		{{ form_end(form)}} 
+	  </div>
+	</div>    
+		{% if articulos is defined %}
+				<input type="text" class="search form-control col-4" id="search" placeholder="Codigo/Descripcion">
+				<table class="table table-striped table-bordered table-hover table-sm estilo1 stmm">
+					<thead>
+						<tr>
+                            <th scope="col">Codigo</th>
+                            <th scope="col">Descripcion</th>
+                            <th scope="col">Cod. Barras</th>							
+                            <th scope="col">Unidad</th>
+                            <th scope="col">Stock Real</th>
+                            <th scope="col">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+				        {% for articulo in articulos %}
+                            <tr data-id="{{ articulo.id }}" class="finder">
+                                <td>{{ articulo.articulo.codigo|upper }}</td>
+                                <td>{{ articulo.articulo.descripcion|title }}</td>
+                            	<td>{{ articulo.articulo.codBarras|title }}</td>                                
+                                <td>{{ articulo.articulo.unidad}}</td>
+                                <td align="form-row align-items-center">
+                                	<input type="text" id="si{{articulo.id}}" class="form-control form-control-sm col-3 align-text-right" value="{{ articulo.sActual  }}"/> </td>
+				                <td class="actions">
+			                       <!-- <a href="#" class="btn btn-sm btn-info">
+			                            Ver
+			                        </a>-->
+
+			                        <a href="" class="btn btn-sm btn-primary btn-sm btnupdate">
+			                            Guardar Cambios
+			                        </a>
+
+			                        <!--<a href="#" class="btn btn-sm btn-danger btn-delete">
+			                            Eliminar
+			                        </a>-->
+				                </td>
+                            </tr>
+				        {% endfor %}
+					</tbody>
+				</table>
+				{{ 	form_start(formUpdateStockInicial, {'attr': {'id': 'form_update'}}) }}
+				{{ form_widget(formUpdateStockInicial) }}
+				{{ form_end(formUpdateStockInicial) }}
+		{% endif %}
+</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('bundles/mantalmacen/js/listArticles.js') }}"></script>
+{% endblock %}

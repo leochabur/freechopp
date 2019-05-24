@@ -1,0 +1,158 @@
+<?php
+
+namespace Mant\AlmacenBundle\Entity\movimientos;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+/**
+ * EnteComercial
+ *
+ * @ORM\Table(name="entes_comerciales")
+ * @ORM\Entity(repositoryClass="Mant\AlmacenBundle\Entity\movimientos\EnteComercialRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="integer")
+ * @ORM\DiscriminatorMap({1:"EnteComercial", 2:"Proveedor", 3:"Cliente"}) 
+ */
+abstract class EnteComercial
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="razonSocial", type="string", length=255)
+     * @Assert\NotNull 
+     */
+    private $razonSocial;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono", type="string", length=255, nullable=true)
+     */
+    private $telefono;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mail", type="string", length=255, nullable=true)
+     */
+    private $mail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cuit", type="string", length=255, nullable=true)
+     */
+    private $cuit;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set razonSocial
+     *
+     * @param string $razonSocial
+     * @return EnteComercial
+     */
+    public function setRazonSocial($razonSocial)
+    {
+        $this->razonSocial = $razonSocial;
+
+        return $this;
+    }
+
+    /**
+     * Get razonSocial
+     *
+     * @return string 
+     */
+    public function getRazonSocial()
+    {
+        return $this->razonSocial;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     * @return EnteComercial
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string 
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set mail
+     *
+     * @param string $mail
+     * @return EnteComercial
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    /**
+     * Get mail
+     *
+     * @return string 
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    /**
+     * Set cuit
+     *
+     * @param string $cuit
+     * @return EnteComercial
+     */
+    public function setCuit($cuit)
+    {
+        $this->cuit = $cuit;
+
+        return $this;
+    }
+
+    /**
+     * Get cuit
+     *
+     * @return string 
+     */
+    public function getCuit()
+    {
+        return $this->cuit;
+    }
+}

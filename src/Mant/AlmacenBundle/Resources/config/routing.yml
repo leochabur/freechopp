@@ -1,0 +1,109 @@
+mant_almacen_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MantAlmacenBundle:Default:index }
+    
+mant_almacen_addAlmacen:
+    path:     /addalmacen
+    defaults: { _controller: MantAlmacenBundle:Almacen:add }
+    
+mant_almacen_list:
+    path:     /list
+    defaults: { _controller: MantAlmacenBundle:Almacen:list }
+    
+gestion_mant_create_almacen:
+    path:     /createalmacen
+    defaults: { _controller: MantAlmacenBundle:Almacen:createalmacen }
+    methods: POST
+    
+mant_almacen_add_clasificacion:
+    path:     /addclas
+    defaults: { _controller: MantAlmacenBundle:Almacen:addclasificacion }
+    
+gestion_mant_create_clasificacion:
+    path:     /createclass
+    defaults: { _controller: MantAlmacenBundle:Almacen:createclasificacion }
+    methods: POST  
+    
+mant_almacen_add_marca:
+    path:     /addmarca
+    defaults: { _controller: MantAlmacenBundle:Almacen:addmarca }
+    
+gestion_mant_create_marca:
+    path:     /createmarca
+    defaults: { _controller: MantAlmacenBundle:Almacen:createmarca}
+    methods: POST      
+    
+mant_almacen_add_articulo:
+    path:     /addarticulo
+    defaults: { _controller: MantAlmacenBundle:Almacen:addarticulo }    
+
+gestion_mant_create_articulo:
+    path:     /createarticulo
+    defaults: { _controller: MantAlmacenBundle:Almacen:createarticulo}
+    methods: POST  
+    
+gestion_mant_edit_articulo_marca_almacen:
+    path:     /editArtMarcAlm/{id}
+    defaults: { _controller: MantAlmacenBundle:Almacen:editArticuloMarcaAlmacen}
+    
+gestion_mant_update_articulo_marca_almacen:
+    path:     /updateArtAlm/{id}
+    defaults: { _controller: MantAlmacenBundle:Almacen:updateArticuloMarcaAlmacen} 
+    methods: [POST, PUT]
+    
+mant_almacen_list_articulos:
+    path:     /listarticulos
+    defaults: { _controller: MantAlmacenBundle:Almacen:listarArticulos }
+    
+mant_articulo_update_stock_inicial:
+    path:     /delartajx/{id}
+    defaults: { _controller: MantAlmacenBundle:Almacen:updateStockInicial }
+    methods: [POST]
+    
+mant_almacen_stock_por_deposito:
+    path:     /existencias
+    defaults: { _controller: MantAlmacenBundle:Almacen:stockXDeposito }    
+    
+gestion_mant_edit_articulo_base:
+    path:     /editArtBase/{id}
+    defaults: { _controller: MantAlmacenBundle:Almacen:editArticuloBase}    
+    
+mant_articulo_update_articulo_base:
+    path:     /updArtBase/{id}
+    defaults: { _controller: MantAlmacenBundle:Almacen:updateArticuloBase }
+    methods: [POST, PUT]  
+    
+mant_set_stock_minimo_maximo:
+    path:     /setstmm
+    defaults: { _controller: MantAlmacenBundle:Almacen:setStockMinimoMaximo } 
+    methods: [POST, PUT, GET]      
+    
+mant_articulo_update_stock_min_max:
+    path:     /updatesmm/{idArt}
+    defaults: { _controller: MantAlmacenBundle:Almacen:updateStockMaxMin}
+    methods: [POST, PUT, GET]    
+    
+mant_articulo_update_stock_maximo_minimo:
+    path:     /updatesmmajx/{id}
+    defaults: { _controller: MantAlmacenBundle:Almacen:updateStockMaxMinAjax }
+    methods: [POST, PUT, GET]
+    
+mant_articulo_add_mca_art_base:
+    path:     /addmcaart/{id}
+    defaults: { _controller: MantAlmacenBundle:Almacen:addMarcaArtBase }
+    methods: POST 
+
+mant_import_articulos_almacen:
+    path:     /import
+    defaults: { _controller: MantAlmacenBundle:Almacen:importArtAlmacen }
+    methods: [POST, GET]
+
+mant_almacen_stock_fraccionar_articulos:
+    path:     /fraccionar
+    defaults: { _controller: MantAlmacenBundle:Almacen:fraccionarArticulo }    
+    methods: POST 
+
+mant_almacen_stock_fraccionar_articulos_action:
+    path:     /fraccionarproc
+    defaults: { _controller: MantAlmacenBundle:Almacen:procesarFraccionarArticulo }    
+    methods: POST           

@@ -1,0 +1,54 @@
+{% include('ppal.html.twig') %}
+
+{% block body %}
+<div class="container">
+	{% for message in app.session.flashBag.get('warning') %}
+	    <div class="alert alert-warning" role="alert">
+	        {{ message }}
+	    </div>
+	{% endfor %}
+	{% for message in app.session.flashBag.get('success') %}
+	    <div class="alert alert-success" role="alert">
+	        {{ message }}
+	    </div>
+	{% endfor %}
+	{% for message in app.session.flashBag.get('error') %}
+	    <div class="alert alert-danger" role="alert">
+	        {{ message }}
+	    </div>
+	{% endfor %}	
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+	    <h3>{% if titulo is defined %} {{ titulo }} {% else %}Carga factura proveedor {% endif %}</h3>
+		<div class="form-group row">
+			<div class="col-6">
+				{{	form_label(form.deposito, label)	}}
+				{{	form_widget(form.deposito, {'attr':{'class' : 'form-control'}})}}
+				<span class="text-danger">
+					{{ form_errors(form.deposito) }}
+				</span>
+			</div>			
+		</div>
+		<div class="form-group row">
+			<div class="col-6">
+				{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+			</div>
+		</div>
+	{{ form_end(form)}} 
+			{% if cancel is defined %}
+					<div class="form-group row">
+				{{ form_start(cancel, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+				<div class="col-6">
+					{{ form_widget(cancel.back, {'attr':{'class' : 'btn btn-warning'}})}}
+				</div>	
+					{{ form_end(cancel)}} 
+					</div>
+			{% endif %}
+ 
+</div>
+{% endblock %}
+{% block javascript %}
+
+
+<script src="{{ asset('bundles/mantalmacen/js/finanzas/facturaProdveedor.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+mant_almacen_factura_venta:
+    path:     /factura
+    defaults: { _controller: MantAlmacenBundle:Ventas:facturaVenta }    
+
+mant_almacen_factura_venta_procesar:
+    path:     /facturaproc
+    defaults: { _controller: MantAlmacenBundle:Ventas:facturaVentaProcesar }    
+    methods: POST    
+
+mant_almacen_factura_venta_add_item:
+    path:     /facaddit/{fact}
+    defaults: { _controller: MantAlmacenBundle:Ventas:facturaVentaAddItem }    
+
+mant_almacen_show_items_nota_pedido:
+    path:     /showitnp
+    defaults: { _controller: MantAlmacenBundle:Ventas:showItemsNotaPedido }       
+
+mant_almacen_add_item_np_factura:
+    path:     /additnp/{fact}
+    defaults: { _controller: MantAlmacenBundle:Ventas:facturarItemNotaPedido }       
+
+mant_almacen_view_change_precios:
+    path:     /viesch
+    defaults: { _controller: MantAlmacenBundle:Ventas:viewChange }        
+    methods: [GET,POST]  
+
+mant_almacen_update_price:
+    path:     /updprice/{id}
+    defaults: { _controller: MantAlmacenBundle:Ventas:updatePrice }          

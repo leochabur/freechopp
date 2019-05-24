@@ -1,0 +1,141 @@
+mant_almacen_entrada_stock:
+    path:     /entrada
+    defaults: { _controller: MantAlmacenBundle:Movimientos:entradaStock }
+    
+mant_almacen_entrada_stock_procesar:
+    path:     /entradasp
+    defaults: { _controller: MantAlmacenBundle:Movimientos:procesarFormularioEntrada }   
+    methods: POST
+    
+mant_almacen_consumo_stock:
+    path:     /consumo
+    defaults: { _controller: MantAlmacenBundle:Movimientos:consumoStock }
+    
+mant_almacen_consumo_stock_procesar:
+    path:     /consumop
+    defaults: { _controller: MantAlmacenBundle:Movimientos:procesarFormularioConsumo }   
+    methods: POST    
+    
+mant_almacen_entrada_stock_add_items:
+    path:     /entradasap/{id}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:addItemEntradaStock }   
+    
+mant_almacen_entrada_stock_add_items_procesar:
+    path:     /movaddart/{id_art}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:addItemMovimientoStock }       
+    methods: POST
+    
+mant_almacen_entrada_stock_add_items_close:
+    path:     /movaddartclose/{mov}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:addItemMovimientoStockClose }       
+
+mant_almacen_entrada_stock_add_items_cancel:
+    path:     /movaddartcancel/{mov}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:addItemMovimientoStockCancel }        
+    
+mant_almacen_entrada_stock_add_items_pausa:
+    path:     /movaddartpausa/{mov}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:addItemMovimientoStockPausa }       
+    
+mant_almacen_salida_stock:
+    path:     /salida
+    defaults: { _controller: MantAlmacenBundle:Movimientos:salidaStock }    
+    
+mant_almacen_salida_stock_procesar:
+    path:     /salidasp
+    defaults: { _controller: MantAlmacenBundle:Movimientos:procesarFormularioSalida}   
+    methods: POST    
+    
+mant_almacen_transferencia_stock:
+    path:     /transf
+    defaults: { _controller: MantAlmacenBundle:Movimientos:transferenciaStock }
+    
+mant_almacen_transferencia_stock_procesar:
+    path:     /transfasp
+    defaults: { _controller: MantAlmacenBundle:Movimientos:procesarFormularioTransferencia }   
+    methods: POST    
+    
+mant_almacen_autorizar_ingreso_stock:
+    path:     /auting
+    defaults: { _controller: MantAlmacenBundle:Movimientos:autorizarIngresoStock }   
+    
+mant_almacen_autorizar_ingreso_item_ajax:
+    path:     /autingit/{item}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:autorizarIngresoItemAjax }     
+    
+mant_almacen_detalle_formulario:
+    path:     /detalleform/{id}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:detalleFormulario }      
+    methods: POST
+    
+mant_almacen_cargar_fomr_autorizar_ingreso_stock:
+    path:     /auting/{id}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:cargarFormAutIngreso }
+    methods: POST
+    
+mant_almacen_fomr_autorizar_ingreso_stock_aceptar:
+    path:     /autingok/{form}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:aceptarFormIngresoStock }
+    methods: POST    
+    
+mant_almacen_fomr_autorizar_ingreso_stock_cancel:
+    path:     /autingcancel/{form}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:cancelarFormIngresoStock }
+    methods: POST      
+    
+mant_almacen_view_documents:
+    path:     /list
+    defaults: { _controller: MantAlmacenBundle:Movimientos:listarFormularios }   
+    
+mant_almacen_orden_compra:
+    path:     /ordencompra
+    defaults: { _controller: MantAlmacenBundle:Movimientos:ordenCompra }   
+    
+mant_almacen_orden_compra_procesar:
+    path:     /ordencompraprocesar/{depo}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:procesarFormularioOrdenCompra }   
+    methods: POST    
+    
+mant_almacen_formularios_observados:
+    path:     /formobs
+    defaults: { _controller: MantAlmacenBundle:Movimientos:formulariosObservados }       
+    
+mant_almacen_firmar_formularios_observados:
+    path:     /firmobs/{mov}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:firmaFomrulario }    
+    methods: POST
+    
+mant_almacen_view_det_forms_observados:
+    path:     /viewfobs/{mov}/{flag}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:viewDetalleFormObservado, flag:0 }    
+    methods: [POST, GET]
+    
+mant_almacen_remove_item_movimiento:
+    path:     /delitmvto/{item}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:deleteItemMovimiento }    
+    methods: [POST, GET]    
+    
+mant_almacen_load_observacion_forms_observados:
+    path:     /loadobs/{mov}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:loadObservacionFormObservado }    
+    methods: [POST, GET]    
+
+mant_almacen_formularios_en_pausa:
+    path:     /formpause
+    defaults: { _controller: MantAlmacenBundle:Movimientos:formulariosPausados }       
+    methods: [POST, GET]
+    
+mant_almacen_form_fin_cancel:
+    path:     /fincanform/{form}
+    defaults: { _controller: MantAlmacenBundle:Movimientos:finalizarCancelarForm }
+    methods: POST   
+
+mant_almacen_nota_pedido:
+    path:     /notap
+    defaults: { _controller: MantAlmacenBundle:Movimientos:notaPedido }    
+
+mant_almacen_nota_pedido_procesar:
+    path:     /notapp
+    defaults: { _controller: MantAlmacenBundle:Movimientos:procesarNotaPedido }   
+    methods: POST    
+    

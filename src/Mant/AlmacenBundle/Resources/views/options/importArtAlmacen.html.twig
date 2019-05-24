@@ -1,0 +1,30 @@
+{% include('ppal.html.twig') %}
+<div class="container">
+    <h5>Importar Articulos</h5>
+    	
+			{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}   
+			<div class="row">
+				<div class="col">
+					{{	form_label(form.origen)	}}
+					{{	form_widget(form.origen, {'attr':{'class' : 'form-control'}})}}
+				</div>
+				<div class="col">
+					{{	form_label(form.destino)	}}				
+					{{	form_widget(form.destino, {'attr':{'class' : 'form-control'}})}}
+				</div>			
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+				</div>
+			</div>
+			{{ form_end(form)}} 
+
+		<br>
+
+{% block javascripts %}
+
+<script src="{{ asset('bundles/mantalmacen/js/listArticles.js') }}"></script>
+
+{% endblock %}
+</div>

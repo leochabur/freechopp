@@ -1,0 +1,68 @@
+{% include('ppal.html.twig') %}
+<div class="container">
+
+   <div class="col-md-6">
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+	    <h3>Modificar Articulo</h3>
+		<div class="form-group row">
+			<div class=" col-md-3">
+			 	{{ form_label (form.codigo) }}{{ form_widget (form.codigo, {'attr' : {'class' : 'form-control form-control-sm', 'readonly' : true}}) }}
+			</div>
+			<div class=" col-md-9">
+			 	{{ form_label (form.descripcion) }}{{ form_widget (form.descripcion, {'attr' : {'class' : 'form-control form-control-sm'}}) }}
+			</div>
+		</div>	
+		<div class="form-group">
+			 {{ form_label (form.especificacion) }}{{ form_widget (form.especificacion, {'attr' : {'class' : 'form-control'}}) }}
+		</div>	
+		<div class="form-group row">
+			<div class=" col-md-4">
+ 				{{ form_label (form.aprovisionamiento) }} 
+ 				{{ form_widget (form.aprovisionamiento, {'attr' : {'class' : 'form-control col form-control-sm'}}) }}
+ 			</div>
+ 			<div class=" col-md-8">
+			 	{{ form_label (form.clasificacion) }} 
+			 	{{ form_widget (form.clasificacion, {'attr' : {'class' : 'form-control col form-control-sm'}}) }}
+			 </div>
+		</div>
+		<div class="form-group row">
+ 			<div class=" col-md-8">
+			 	{{ form_label (form.unidad) }} 
+			 	{{ form_widget (form.unidad, {'attr' : {'class' : 'form-control col form-control-sm'}}) }}
+			 </div>
+		</div>		
+		
+		{% for artMarca in form.articulosMarca %}
+			<div class="form-group row">
+				<div class=" col-md-6">{{form_label (artMarca.marca) }}  {{ form_widget(artMarca.marca, {'attr' : {'class' : 'form-control form-control-sm', 'readonly' : true}}) }}</div>
+				<div class=" col-md-6">{{ form_label (artMarca.codigoBarras) }}  {{ form_widget(artMarca.codigoBarras, {'attr' : {'class' : 'form-control form-control-sm'}}) }}</div>
+			</div>
+		{% endfor %}
+		
+<div class="form-group">
+		<p>
+			{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+		</p>
+</div>
+	{{ form_end(form)}} 
+  </div>		
+  <div class="col-md-6">
+  	<div class="form-group">
+		<div class="card">
+			  <div class="card-header">
+			    Agregar Marca
+			  </div>
+			  <div class="card-body">
+			  	{{ form_start(addmca, {'attr': {'novalidate': 'novalidate', 'role':'form', 'id':'add-mca', 'class':'row'}})}}
+			  	{{ form_widget (addmca.marcas, {'attr' : {'class' : 'form-control col-8 form-control-sm'}}) }}
+			  	{{ form_widget(addmca.save, {'attr':{'class' : 'btn btn-warning col btn-add-mca col-4 btn-sm'}})}}
+			  	{{ form_end(addmca)}} 
+			  </div>
+		</div>	
+	</div>
+  </div>
+
+</div>
+{% block javascripts %}
+	<script src="{{ asset('bundles/mantalmacen/js/addMca.js') }}"></script>
+{% endblock %}

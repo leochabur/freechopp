@@ -1,0 +1,79 @@
+{% extends('ppal.html.twig') %}
+{% block stylesheets %}
+ 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/estilos.css')}}">
+ 	{{ parent() }}
+ <style>
+ 	 	.bootbox .modal-header{
+								display: block;
+ 	 						}
+ </style>
+
+
+{% endblock %}
+{% block body %}
+{{ parent() }}
+<div class="container">
+	<div class="card">
+	  <div class="card-header">
+			Movimiento Articulo       Periodo: {{ desde|date("d/m/Y")}} - {{ hasta|date("d/m/Y") }}
+	  </div>
+	  <div class="card-body row">
+	  		<div class="col">Codigo: {{ articulo.codigo|upper}}    Descripcion: {{ articulo.descripcion|upper }}</div>
+	  		<div class="col"><button class="btn btn-success btn-sm back">Volver</button></div>
+	  </div>
+	 </div>
+
+	<table class="table table-striped table-hover table-bordered results table-sm estilo1">
+		<thead>
+			<tr>
+	            <th>Fecha</th>
+	            <th>Numero</th>
+	            <th>Movimiento</th>
+	            <th>Concepto</th>	            
+	            <th>Origen</th>	 
+	             <th>Destino</th>	 
+	            <th>Cantidad</th>
+	            <th>$ Unitario</th>	  
+	            <th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+	        {% for mov in movimientos %}
+	            <tr>
+	                <td>{{ mov.most.fecha|date("d/m/Y") }}</td>
+					<td>{{ "%06d" | format(mov.most.numeroComprobante) }}</td>   	                
+	                <td>{{ mov.most.descripcionFormulario }}</td>
+	                <td>{{ mov.most.conceptoEntrada }}</td>	                
+                    <td>{% if mov.most.almacenOrigen is defined%}
+                    		{{ mov.most.almacenOrigen}}
+                    	{% endif %}
+                    </td>
+                    <td>{% if mov.most.almacenDestino is defined%}
+                    		{{ mov.most.almacenDestino}}
+                    	{% endif %}
+                    </td>  		                
+	                <td class="text-right">{{ mov.cant }}</td>
+	                <td class="text-right">$ {{ mov.precio|number_format(2, ',', '.')  }}</td>	  
+	                <td class="text-right">$ {{ mov.total|number_format(2, ',', '.')  }}</td>	                
+	                
+	            </tr>
+	        {% endfor %}
+		</tbody>
+	</table>  
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+	<script>
+		$('.back').click(function(){
+										history.back();	
+			});
+	</script>
+				
+	
+{% endblock %}
+
+
+

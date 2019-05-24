@@ -1,0 +1,32 @@
+{% include('ppal.html.twig') %}
+
+<div class="container container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-xs-6 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <strong class="">Login</strong></div>
+                <div class="panel-body">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <strong>Sesion Activa</strong>
+                {% else %}
+                <form action="{{ path('gestion_usuarios_check') }}" method="post">
+                    {% if error%}
+                            {{ error.messageKey }} 
+                    {% endif %}
+                    <label for="username" class="control-label">Username:</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+         
+                    <label for="password">Password:</label>
+                    <input type="password" id="clave" name="_clave" class="form-control"/>
+         
+                    <input type="hidden" name="_target_path" value="gestion_usuarios_homepage" />
+                    <div class="form-group last">
+                            <button type="submit" class="btn btn-primary btn-success">login</button>
+                    </div>
+                </form>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

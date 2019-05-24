@@ -1,0 +1,87 @@
+{% include('ppal.html.twig') %}
+<div class="container">
+	{% for message in app.session.flashBag.get('response') %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+   <div class="col-md-6">
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+	    <h3>Nuevo Articulo</h3>
+		<div class="form-group row">
+		    <div class=" col-md-3">
+    			{{	form_label(form.codigo, 'Codigo Interno')	}}
+    			{{	form_widget(form.codigo, {'attr':{'class' : 'form-control form-control-sm', 'size' : '5'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.codigo) }}
+    			</span>
+			</div>
+    		<div class="col-md-9">
+    			{{	form_label(form.descripcion)	}}
+    			{{	form_widget(form.descripcion, {'attr':{'class' : 'form-control form-control-sm'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.descripcion) }}
+    			</span>
+    		</div>				
+		</div>
+
+		<div class="form-group">
+			{{	form_label(form.especificacion)	}}
+			{{	form_widget(form.especificacion, {'attr':{'class' : 'form-control'}})}}
+			<span class="text-danger">
+				{{ form_errors(form.especificacion) }}
+			</span>
+		</div>	
+		<div class="form-group row">
+    		<div class="col-md-6">
+    			{{	form_label(form.clasificacion)	}}
+    			{{	form_widget(form.clasificacion, {'attr':{'class' : 'form-control form-control-sm'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.clasificacion) }}
+    			</span>
+    		</div>            
+    		<div class="col-md-6">
+    			{{	form_label(form.unidad, 'Unidad de Medida')	}}
+    			{{	form_widget(form.unidad, {'attr':{'class' : 'form-control form-control-sm'}})}}
+    			<span class="text-danger">
+    				{{ form_errors(form.unidad) }}
+    			</span>
+    		</div>            
+		</div>	
+        <div class="form-group row">
+            <div class="col-md-6">
+                {{  form_label(form.cantXUnidad, 'Cant. X Unidad')  }}
+                {{  form_widget(form.cantXUnidad, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.cantXUnidad) }}
+                </span>
+            </div>                   
+        </div>    
+        <div class="form-group row">
+            <div class="col-md-6">
+                {{  form_label(form.precioCompra, 'Ultimo Precio Compra')  }}
+                {{  form_widget(form.precioCompra, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.precioCompra) }}
+                </span>
+            </div>                   
+        </div>    
+        <div class="form-group row">
+            <div class="col-md-8">
+                {{  form_label(form.articuloBase, 'Es fraccion de ...')  }}
+                {{  form_widget(form.articuloBase, {'attr':{'class' : 'form-control form-control-sm'}})}}
+                <span class="text-danger">
+                    {{ form_errors(form.articuloBase) }}
+                </span>
+            </div>                   
+        </div>          	
+		<p>
+			{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+		</p>
+
+	{{ form_end(form)}} 
+  </div>
+</div>
+<script>
+
+</script>

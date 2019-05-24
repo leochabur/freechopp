@@ -1,0 +1,28 @@
+mant_almacen:
+    resource: "@MantAlmacenBundle/Resources/config/routing.yml"
+    prefix:   /almacen
+
+mant_almacen_stock:
+    resource: "@MantAlmacenBundle/Resources/config/routingmovimientos.yml"
+    prefix:   /stock
+
+gestion_usuarios:
+    resource: "@GestionUsuariosBundle/Resources/config/routing.yml"
+    prefix:   /
+
+mant_almacen_proveedores:
+    resource: "@MantAlmacenBundle/Resources/config/routingprov.yml"
+    prefix:   /proov
+
+mant_almacen_informes:
+    resource: "@MantAlmacenBundle/Resources/config/routinginformes.yml"
+    prefix:   /informes
+
+mant_almacen_ventas:
+    resource: "@MantAlmacenBundle/Resources/config/ventas.yml"
+    prefix:   /ventas    
+    
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+

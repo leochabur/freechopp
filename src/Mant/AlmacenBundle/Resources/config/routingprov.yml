@@ -1,0 +1,47 @@
+proveedores_add:
+    path:     /add
+    defaults: { _controller: MantAlmacenBundle:Proveedores:formAddProveedor }
+    
+proveedores_add_procesar:
+    path:     /addProcesar
+    defaults: { _controller: MantAlmacenBundle:Proveedores:formAddProveedorProcesar }
+    methods: POST
+    
+proveedores_aut_orden_compra:
+    path:     /autoc
+    defaults: { _controller: MantAlmacenBundle:Proveedores:autorizarOrdenCompra }
+    
+proveedores_firmar_oc_observada:
+    path:     /firmocobs/{mov}
+    defaults: { _controller: MantAlmacenBundle:Proveedores:autorizarOC }    
+    methods: [POST, GET]
+  
+proveedores_iniciar_alta_factura_proveedor:
+    path:     /inifact/{depo}
+    defaults: { _controller: MantAlmacenBundle:Proveedores:inicioAltaFacturaProveedor, depo:0}   
+    
+proveedores_select_proveedor_alta_factura_proveedor:
+    path:     /selprov/{depo}
+    defaults: { _controller: MantAlmacenBundle:Proveedores:selectProveedorFactura}    
+    
+proveedores_alta_factura_proveedor:
+    path:     /addfact/{depo}
+    defaults: { _controller: MantAlmacenBundle:Proveedores:altaFacturaProveedor }  
+    
+proveedores_alta_factura_proveedor_procesar:
+    path:     /addfactproc/{depo}/{factu}
+    defaults: { _controller: MantAlmacenBundle:Proveedores:procesarFacturaProveedor, depo:0, factu:0}    
+    methods: [POST, GET]
+    
+proveedores_procesar_factura_proveedor:
+    path:     /procfactp/{fact}
+    defaults: { _controller: MantAlmacenBundle:Proveedores:finalizarProcesarFacturaProveedor }  
+    
+proveedores_add_oc_factura_proveedor:
+    path:     /addocfc/{fact}/{mov}
+    defaults: { _controller: MantAlmacenBundle:Proveedores:addOCFacturaProveedor }     
+    
+proveedores_iniciar_carga_facturas_pendientes:
+    path:     /inifactpend
+    defaults: { _controller: MantAlmacenBundle:Proveedores:inicioFacturasPendientes}  
+    

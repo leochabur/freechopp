@@ -1,0 +1,46 @@
+{% include('ppal.html.twig') %}
+<div class="container">
+	{% for message in app.session.flashBag.get('response') %}
+	    <div class="alert alert-success" role="alert">
+	        {{ message }}
+	    </div>
+	{% endfor %}
+	{% for message in app.session.flashBag.get('error') %}
+	    <div class="alert alert-danger" role="alert">
+	        {{ message }}
+	    </div>
+	{% endfor %}	
+   <div class="col-md-6">
+   	<div><h4>Formulario Entrada Stock</h4></div>   
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'role':'form'}})}}
+	
+		<div class="form-group col-6">
+			{{	form_label(form.movimiento.fecha )	}}
+			{{	form_widget(form.movimiento.fecha , {'attr':{'class' : 'form-control'}})}}
+			<span class="text-danger">
+				{{ form_errors(form.movimiento.fecha ) }}
+			</span>
+		</div>			
+			
+		<div class="form-group col-8">
+			{{	form_label(form.movimiento.conceptoEntrada )	}}
+			{{	form_widget(form.movimiento.conceptoEntrada , {'attr':{'class' : 'form-control'}})}}
+			<span class="text-danger">
+				{{ form_errors(form.movimiento.conceptoEntrada ) }}
+			</span>
+		</div>
+		
+		<div class="form-group col-8">
+			{{	form_label(form.almacenDestino, 'Deposito Destino' )	}}
+			{{	form_widget(form.almacenDestino , {'attr':{'class' : 'form-control'}})}}
+			<span class="text-danger">
+				{{ form_errors(form.almacenDestino ) }}
+			</span>
+		</div>
+		<div class="form-group col-8">
+			{{ form_widget(form.save, {'attr':{'class' : 'btn btn-success'}})}}
+		</div>
+
+	{{ form_end(form)}} 
+  </div>
+</div>
