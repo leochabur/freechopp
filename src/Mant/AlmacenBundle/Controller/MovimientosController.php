@@ -382,7 +382,7 @@ class MovimientosController extends Controller
                     $route = "mant_almacen_salida_stock";
                     break;
                 case 4:
-                    $route = "mant_almacen_orden_compra";
+                    $route = "mant_almacen_view_change_precios";
                     break;
                 case 5:
                     $route = "mant_almacen_autorizar_ingreso_stock";
