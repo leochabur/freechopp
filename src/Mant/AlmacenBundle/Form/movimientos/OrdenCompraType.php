@@ -30,7 +30,7 @@ class OrdenCompraType extends AbstractType
                 ))        
                 ->add('almacenDestino', 'entity', array('class' => 'MantAlmacenBundle:Almacen','choices' => array($deposito->getId() => $deposito)))                
                 ->add('proveedor', 'entity', array('class' => 'MantAlmacenBundle:movimientos\Proveedor',
-                                            'query_builder' => function(ProveedorRepository $er) use ($type){
+                                            'query_builder' => function(ProveedorRepository $er){
                                                                                                
                                                                                                 return $er->createQueryBuilder('u');
                                                                                              }))  
