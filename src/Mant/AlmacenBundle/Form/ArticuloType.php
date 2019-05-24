@@ -23,8 +23,7 @@ class ArticuloType extends AbstractType
             ->add('descripcion')
             ->add('especificacion')
             ->add('unidad')           
-            ->add('cantXUnidad', 'number', array('invalid_message' => 'Valor invalido!'))        
-            ->add('precioCompra', 'number', array('invalid_message' => 'Valor invalido!'))                                       
+            ->add('cantXUnidad', 'number', array('invalid_message' => 'Valor invalido!'))                                       
             ->add('clasificacion', 'entity', array('class' => 'MantAlmacenBundle:Clasificacion',
                                                 'query_builder' => function(ClasificacionRepository $er){
                                                                                                 return $er->createQueryBuilder('u');

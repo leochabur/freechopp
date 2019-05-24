@@ -27,11 +27,11 @@
 				<table class="table table-striped table-hover table-bordered table-sm stmm estilo1">
 					<thead>
 						<tr>
-                            <th>Descripcion</th>
-                            <th>Codigo Barras</th>                          
+                            <th>Descripcion</th>                    
                             <th>
                             	<div class="form-row">
-                            		<div class="offset-md-1 col-5">Descripcion</div>
+                            		<div class="col-3">Descripcion</div>
+                            		<div class="col-3">Cod. Barras</div>                            		
                             		<div class="col-2">Precio Base</div>                            		
                             		<div class="col-2">Markup</div>
                             		<div class="col-2">Accion</div>
@@ -42,12 +42,12 @@
 					<tbody>
 				        {% for articulo in articulos %}
                             <tr class="finder">
-                                <td class="h7">{{ articulo.articulo.descripcion|title }}</td>                               	
-                                <td class="h7">{{ articulo.articulo.codBarras|upper }}</td>                           
+                                <td class="h7">{{ articulo.articulo.descripcion|title }}</td>                               	                  
                                 <td>
 									{{ form_start(forms[articulo.id], {'attr': {'novalidate': 'novalidate', 'role':'form', 'class':'form-upd'}}) }}    
 										<div class="form-row">
-									{{ form_widget(forms[articulo.id].descripcion , {'attr':{'class' : 'form-control form-control-sm offset-md-1 col-5 estilo1'}}) }}
+									{{ form_widget(forms[articulo.id].descripcion , {'attr':{'class' : 'form-control form-control-sm col-3 estilo1'}}) }}
+									{{ form_widget(forms[articulo.id].codBarras , {'attr':{'class' : 'form-control form-control-sm col-3 estilo1'}}) }}					
 									{{ form_widget(forms[articulo.id].pcompra , {'attr':{'class' : 'form-control form-control-sm col-2 estilo1'}}) }}									
 									{{ form_widget(forms[articulo.id].markup , {'attr':{'class' : 'form-control form-control-sm col-2 estilo1'}}) }}
 									{{ form_widget(forms[articulo.id].save , {'attr':{'class' : 'btn btn-warning btn-sm col-2 estilo1'}}) }}

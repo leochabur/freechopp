@@ -384,7 +384,8 @@ class AlmacenController extends Controller
     private function getFormUpdateSMM($url, $method, $articulo)
     {
         return  $this->createFormBuilder()
-                     ->add('descripcion', 'text', array('data' => $articulo->getArticulo()->getDescripcion()))        
+                     ->add('descripcion', 'text', array('data' => $articulo->getArticulo()->getDescripcion())) 
+                     ->add('codBarras', 'text', array('data' => $articulo->getArticulo()->getCodBarras()))                                
                      ->add('pcompra', 'number', array('data' => $articulo->getPrecioCompra()))
                      ->add('markup', 'number', array('data' => $articulo->getMarkup()))
                      ->add('save', 'submit', array('label'=>'Guardar'))
@@ -407,6 +408,7 @@ class AlmacenController extends Controller
                 if ($form->isValid()) {
                     $data = $form->getData();             
                     $articulo->setMarkup($data['markup']);
+                    $articulo->getArticulo()->setCodBarras($data['codBarras']);                    
                     $articulo->setPrecioCompra($data['pcompra']);
                     $articulo->getArticulo()->setDescripcion($data['descripcion']);
                     $em->flush();
