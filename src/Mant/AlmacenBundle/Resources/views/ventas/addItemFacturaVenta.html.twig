@@ -50,7 +50,7 @@
 								<td>{{ item.costo|number_format(2, '.', '')  }}</td>                                                             
                                 <td>{{ item.precioUnitario|number_format(2, '.', '')  }}</td>       
                                 <td>{{ item.precioTotal|number_format(2, '.', '')  }}</td>
-                                <td><input type='button' class='btn btn-danger btn-sm delit' value='X' onClick='removeItem("{{path('mant_almacen_remove_item_movimiento', {'item' : item.id})}}", {{item.id}})';/> </td>
+                                <td><a class='btn btn-danger btn-sm delit' href="{{path('mant_almacen_remove_item_movimiento', {'item' : item.id})}}">x</a> </td>
                             </tr>
 				        {% endfor %}						
 					</tbody>
@@ -98,37 +98,6 @@
 		</div>
 	</span>
 	{% endif %}
-	<span class="counter pull-left"></span>
-	{% if articulos is defined %}
-	<div>
-	 			<input type="text" class="search form-control col-4" placeholder="Descripcion/Codigo Barras">
-				<table class="table table-striped table-hover table-bordered results table-sm table-fixed estilo1">
-					<thead>
-						<tr>
-                            <th>Codigo</th>
-                            <th>Descripcion</th>
-                            <th>Codigo Barras</th>
-                            <th>Stock Actual</th>
-                            <th>Unitario</th>                            
-						</tr>
-    					<tr class="warning no-result">
-      						<td colspan="7"><i class="fa fa-warning"></i> No se ecnontraron resultados</td>
-    					</tr>						
-					</thead>
-					<tbody>
-				        {% for articulo in articulos %}
-                            <tr data-id="{{ articulo.id }}" class="trtable">
-                                <td>{{ articulo.articulo.codigo|upper }}</td>
-                                <td>{{ articulo.articulo.descripcion|title }}</td>
-                                <td>{{ articulo.articulo.codBarras|title }}</td>                                
-                                <td>{{ articulo.sActual  }}</td>
-                                <td>{{ articulo.precioCompra|number_format(2, '.', '')  }}</td>
-                            </tr>
-				        {% endfor %}
-					</tbody>
-				</table>
-	</div>
-{% endif %}
 </div>
 {% endblock %}
 {% block javascripts %}
@@ -144,8 +113,36 @@
 																			   form.serialize(),
 																			   function(data){
 																			   					$('#detalle').html(data);
-																			   });
+																			   });																	
 									});
+									$('.delit').click(function(event){						
+																		event.preventDefault();
+																		var a = $(this);
+															            bootbox.confirm({
+															                message: "Seguro quitar el item de la factura?",
+															                buttons: {
+															                    confirm: {
+															                        label: 'Si',
+															                        className: 'btn-success'
+															                    },
+															                    cancel: {
+															                        label: 'No',
+															                        className: 'btn-danger'
+															                    }
+															                },
+															                callback: function (result) {
+															                    if (result == true){											
+																					$.post(a.attr('href'), 
+																						   function(data){
+																						   					if (data.status)
+																						   						location.reload();
+																						   					else
+																						   						alert(data.message);
+																						   });	
+																				}
+																			}
+																		});
+																	});									
 		});
 	</script>
 	

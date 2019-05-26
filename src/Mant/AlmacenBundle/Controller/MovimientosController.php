@@ -894,15 +894,25 @@ class MovimientosController extends Controller
     }
     
     public function deleteItemMovimientoAction($item){
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('MantAlmacenBundle:movimientos\ItemMovimiento');
-        $itemMov = $repository->find($item);         
-        if (!$itemMov) {
-            throw $this->createNotFoundException('No se encuentra el movimiento  ');
+        try{
+                $em = $this->getDoctrine()->getManager();
+                $repository = $em->getRepository('MantAlmacenBundle:movimientos\ItemMovimiento');
+                $itemMov = $repository->find($item);         
+                if (!$itemMov) {
+                    throw $this->createNotFoundException('No se encuentra el item!');
+                }
+                if ($itemMov->getMovimiento()->getConfirmado()){
+                    throw $this->createNotFoundException('El movimiento ya se encuentra emitido!');            
+                }
+                $itemMov->getMovimiento()->deleteItemMovimiento($itemMov);
+                $em->remove($itemMov);
+                $em->flush();        
+                return new JsonResponse(array('status' =>true));
         }
-        $em->remove($itemMov);
-        $em->flush();        
-        return new JsonResponse(array('ok' =>true));
+        catch (\Exception $e) 
+                            {
+                                return new JsonResponse(array('status' => false, 'message' => $e->getMessage()));
+                            }        
     }   
     
     public function formulariosPausadosAction(Request $request)

@@ -178,4 +178,9 @@ class EntradaStock extends MovimientoStock
     {
         return null;
     }    
+
+    public function deleteItemMovimiento($item)
+    {
+        
+    }   
 }

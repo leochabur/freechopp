@@ -333,6 +333,7 @@ abstract class MovimientoStock
      public abstract function getControlaStockPorMarca(); ///indica si el control de stock se realiza para los articulos con marca o solo articulos de manera abstract
      public abstract function generaMovimientoCtaCte();
      public abstract function getEnteComercial();
+     public abstract function deleteItemMovimiento($item);/////para cada instancia del movimiento define si debe o no devolver el stock al articulo correspondiente Ej. para las fcaturas de venta cuando se elimina un item debe devolver el stock del articulo
     /**
      * Set numeroComprobante
      *

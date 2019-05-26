@@ -183,4 +183,9 @@ class NotaPedido extends MovimientoStock
     {
         return $this->getDescripcionFormulario()." N°: ".$this->getNumeroComprobante()."  Fecha: ".$this->getFecha()->format('d/m/Y');
     }
+
+    public function deleteItemMovimiento($item)
+    {
+
+    }       
 }

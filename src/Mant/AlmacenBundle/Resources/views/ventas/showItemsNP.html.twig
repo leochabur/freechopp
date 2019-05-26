@@ -1,11 +1,4 @@
-{% extends('ppal.html.twig') %}
-{% block stylesheets %}
-	{{ parent() }}
- 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/movimientos/addArticulosMovimiento.css')}}">
- 	<link rel="stylesheet" href="{{ asset('bundles/mantalmacen/css/estilos.css')}}">
-{% endblock %}
 
-{% block body %}
 <div class="container">
    <div class="card">
     <div class="card-body">
@@ -18,7 +11,13 @@
                             <th>Cantidad</th>
                             <th>Unitario</th>           
                             <th>Total</th> 
-                            <th class="text-right">Cantidad-Precio Unitario / Guardar</th>
+                            <th>
+                            	<div class="row">
+                            		<div class="col-4">Cantidad</div>
+                            		<div class="col-4">Precio Unitario</div>
+                            		<div class="col-4">Agregar</div>
+                            	</div>
+                            </th>
 						</tr>
 					</thead>
 					<tbody>
@@ -32,9 +31,9 @@
                                 <td>
 									{{ 	form_start(forms[item.item.id], {'attr': {'class':'fact'}}) }}
 									<div class="form-row">
-									{{	form_widget(forms[item.item.id].cantidad, {'attr':{'class' : 'form-control form-control-sm col-2 offset-md-6'}})}}
-									{{	form_widget(forms[item.item.id].unitario, {'attr':{'class' : 'form-control form-control-sm col-2'}})}}									
-									{{ form_widget(forms[item.item.id].add, {'attr':{'class' : 'btn btn-success btn-add col-1 btn-sm'}}) }}	
+									{{	form_widget(forms[item.item.id].cantidad, {'attr':{'class' : 'form-control form-control-sm col-4'}})}}
+									{{	form_widget(forms[item.item.id].unitario, {'attr':{'class' : 'form-control form-control-sm col-4'}})}}									
+									{{ form_widget(forms[item.item.id].add, {'attr':{'class' : 'btn btn-success btn-add col-4 btn-sm'}}) }}	
 									</div>	
 									{{ form_end(forms[item.item.id]) }}
                                 </td>
@@ -46,9 +45,8 @@
   </div> 
 
 </div>
-{% endblock %}
-{% block javascripts %}
-	{{ parent() }}
+
+
 	<script type="text/javascript">
 		$('.fact').submit(function(event){
 											event.preventDefault();
@@ -68,4 +66,3 @@
 		});
 	</script>
 	
-{% endblock %}

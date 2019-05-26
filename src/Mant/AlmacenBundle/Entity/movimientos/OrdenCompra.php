@@ -239,4 +239,9 @@ class OrdenCompra extends MovimientoStock
     {
         return $this->proveedor;
     }
+
+    public function deleteItemMovimiento($item)
+    {
+
+    }       
 }

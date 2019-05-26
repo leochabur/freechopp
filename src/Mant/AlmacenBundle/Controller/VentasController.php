@@ -133,9 +133,17 @@ class VentasController extends Controller
             {
                 $var = $request->request->get("form");
                 $cantVenta = $var['cantidad'];
+                if (!is_numeric($cantVenta) || ($cantVenta <= 0))
+                { /// no hay stock del producto
+                    return new JsonResponse(array('status' => false, 'msge'=> 'Cantidad invalida!'));
+                }                
                 $em = $this->getDoctrine()->getManager();
                 $repository = $em->getRepository('MantAlmacenBundle:movimientos\MovimientoStock');
                 $factura = $repository->find($fact);
+
+                if ($factura->getConfirmado()){
+                    return new JsonResponse(array('status' => false, 'msge'=> 'La factura ya ha sido emitida! No se puede modificar'));                    
+                }
 
                 $item = $em->find('MantAlmacenBundle:movimientos\ItemMovimiento', $var['item']);
 

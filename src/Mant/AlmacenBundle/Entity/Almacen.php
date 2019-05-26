@@ -64,9 +64,7 @@ class Almacen
     private $user;
     
     
-    /**
-     * @ORM\ManyToMany(targetEntity="Articulo", mappedBy="almacenes")
-     */    
+
     private $articulos;    
 
 

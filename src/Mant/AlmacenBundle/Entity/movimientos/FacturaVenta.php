@@ -236,4 +236,9 @@ class FacturaVenta extends MovimientoStock
     {
         return $this->notasPedido;
     }
+
+    public function deleteItemMovimiento($item)
+    {
+        $item->getArticulo()->updateStock($item->getCantidad());
+    }       
 }
