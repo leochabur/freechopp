@@ -241,4 +241,11 @@ class FacturaVenta extends MovimientoStock
     {
         $item->getArticulo()->updateStock($item->getCantidad());
     }       
+
+    public function facturoNotaPedidoCompleta()
+    {
+        foreach ($this->getItems() as $item) {
+            
+        }
+    }
 }

@@ -29,7 +29,7 @@ abstract class MovimientoCuenta
      *
      * @ORM\Column(name="activa", type="boolean")
      */
-    private $activa;
+    private $activa = true;
 
     /**
      * @var float

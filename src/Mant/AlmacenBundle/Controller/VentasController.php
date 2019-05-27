@@ -68,9 +68,14 @@ class VentasController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $factura = $em->find('MantAlmacenBundle:movimientos\FacturaVenta', $fact);
+        if (!$factura){
+            $this->addFlash('error',"Factura inexistente!!");
+            return $this->redirectToRoute('mant_almacen_factura_venta');            
+        }
         $repository = $em->getRepository('MantAlmacenBundle:movimientos\MovimientoStock');
         $notas = $this->getFormLoadNotaPedido($factura->getCliente(), $factura->getId());
-        return $this->render('MantAlmacenBundle:ventas:addItemFacturaVenta.html.twig', array('factura' => $factura, 'notas' => $notas->createView()));
+        $form = $this->createFormActionFacturaVenta($factura->getId(), 'mant_almacen_action_factura_venta', 'POST');
+        return $this->render('MantAlmacenBundle:ventas:addItemFacturaVenta.html.twig', array('factura' => $factura, 'notas' => $notas->createView(), 'form' => $form->createView()));
     }
 
     private function getFormLoadNotaPedido($cliente, $idFact)
@@ -112,6 +117,89 @@ class VentasController extends Controller
         }    
         return new Response("holaaaaaaaaaaaaa");    
     }
+
+    private function createFormActionFacturaVenta($id, $url, $method)
+    {
+        return $this->createFormBuilder()
+                    ->add('save', 'submit', array('label' => 'Guardar Formulario'))
+                    ->add('cancel', 'submit', array('label' => 'Eliminar Formulario'))
+                    ->add('pausa', 'submit', array('label' => 'Pausar Formulario'))
+                    ->add('accion', 'hidden')
+                    ->setMethod($method)
+                    ->setAction($this->generateUrl($url, array('mov' => $id)))
+                    ->getForm();
+    }    
+
+    public function actionFacturaVentaAction($mov, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('MantAlmacenBundle:movimientos\MovimientoStock');
+        $factura = $repository->find($mov);
+        if ($factura->getConfirmado()){
+            $this->addFlash('error',"La fcatura se encuentra ya finalizada!!");
+            return $this->redirectToRoute('mant_almacen_factura_venta');            
+        }
+        $form = $this->createFormActionFacturaVenta($mov, 'mant_almacen_action_factura_venta', 'POST');
+        $form->handleRequest($request);
+        $data = $form->getData();
+        if ($data['accion'] == 'p')
+        {
+            $this->addFlash('response',"La fcatura se ha pausado exitosamente!!");
+            return $this->redirectToRoute('mant_almacen_factura_venta');
+        }
+        elseif ($data['accion'] == 'c')
+        {
+            foreach ($factura->getItems() as $item) {
+                $factura->deleteItemMovimiento($item);
+            }
+            $em->remove($factura);
+            $em->flush();
+            $this->addFlash('response',"La fcatura se ha eliminado exitosamente!!");
+            return $this->redirectToRoute('mant_almacen_factura_venta');
+        }
+        elseif ($data['accion'] == 's')
+        {
+            /////////recupera el proximo numero de comprobante////////////////
+            $options = $repository->getNumeroComprobante($factura->getTipoFormulario(), $factura->getDepositoAAfectar());
+            $numero = 1;
+            if (!$options){
+                $options = new NumeracionFormulario();
+                $options->setFormulario($factura->getTipoFormulario());
+                $options->setDeposito($factura->getDepositoAAfectar());
+                $em->persist($options);
+            }
+            else{
+                $numero = $options->getProxNumero();
+            }
+            $factura->setNumeroComprobante($numero);
+            $numero++;
+            $options->setProxNumero($numero);
+            ///////////fin recupero numero comprobante///////////////////////   
+            $factura->setConfirmado(true);
+            $repository = $em->getRepository('MantAlmacenBundle:finanzas\CuentaCorriente');
+            $ctaCte = $repository->ctaCteEnteComercial($factura->getCliente());
+            if (!$ctaCte){
+                $ctaCte = new CuentaCorriente();
+                $ctaCte->setEnte($factura->getCliente());
+                $em->persist($ctaCte);
+            }
+            $debito = new MovimientoDebito();
+            $debito->setMonto($factura->getImporteTotal());
+            $debito->setDetalle($factura->getDescripcionFormulario()." ".$factura->getNumeroComprobante());
+            $debito->setMovimientoStock($factura);
+            $debito->setCtacte($ctaCte);
+            $em->persist($debito);  
+            $em->flush();           
+            $this->addFlash('response',"La fcatura se ha generado exitosamente!!");
+        /*    $pdf = $this->get('print_pdf');
+            return new Response($pdf->Output(), 200, array(
+            'Content-Type' => 'application/pdf'));   */         
+
+            return $this->redirectToRoute('mant_almacen_factura_venta');                          
+        }
+        return new Response($data['accion']);
+
+    }   
 
     private function getFormAddItemNPFactura($item, $cant, $idFact)
     {

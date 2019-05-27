@@ -26,7 +26,7 @@ class CuentaCorriente
      *
      * @ORM\Column(name="activa", type="boolean", nullable=true)
      */
-    private $activa;
+    private $activa = true;
 
     /**
     * @ORM\ManyToOne(targetEntity="Mant\AlmacenBundle\Entity\movimientos\EnteComercial") 

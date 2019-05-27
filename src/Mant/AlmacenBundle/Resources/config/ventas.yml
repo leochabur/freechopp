@@ -36,3 +36,8 @@ mant_almacen_view_change_precios:
 mant_almacen_update_price:
     path:     /updprice/{id}
     defaults: { _controller: MantAlmacenBundle:Ventas:updatePrice }  
+
+mant_almacen_action_factura_venta:
+    path:     /actionvta/{mov}
+    defaults: { _controller: MantAlmacenBundle:Ventas:actionFacturaVenta }   
+    methods: POST   

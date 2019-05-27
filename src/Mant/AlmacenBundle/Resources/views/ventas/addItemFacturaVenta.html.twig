@@ -68,7 +68,7 @@
 			  <div class="form-group">
 					{{ 	form_start(notas, {'attr': {'class':'view row'}}) }}
 					{{	form_widget(notas.notaspedido, {'attr':{'class' : 'form-control col-10'}})}}
-					{{ form_widget(notas.save, {'attr':{'class' : 'btn btn-warning btn-add col-2'}}) }}		
+					{{ form_widget(notas.save, {'attr':{'class' : 'btn btn-success btn-add col-2'}}) }}		
 					{{ form_end(notas) }}
 			  </div>
 			  <div id="detalle">
@@ -77,27 +77,14 @@
 	    </div>
 	  </div>  
 
-	 {% if form is defined %}
- 	<span class="pull-right">
+
+		{{ 	form_start(form, {'attr': {'class':'formAction'}}) }}
 		<div class="row">
-			<div class="col-2">
-				{{ 	form_start(formcancel, {'attr': {'class':'frmcancel'}}) }}
-				{{ form_widget(formcancel.cancel, {'attr':{'class' : 'btn btn-danger btn-add btncancel'}}) }}		
-				{{ form_end(formcancel) }}
-			</div>
-			<div class="col-2">
-				{{ 	form_start(formpausa, {'attr': {'class':'frmpaused'}})  }}
-				{{ form_widget(formpausa.pausa, {'attr':{'class' : 'btn btn-warning btn-add btnpausa'}}) }}	
-				{{ form_end(formpausa) }}	
-			</div>			
-			<div class="col-2">
-				{{ 	form_start(formcierre, {'attr': {'class':'frmsend'}})  }}
-				{{ form_widget(formcierre.save, {'attr':{'class' : 'btn btn-primary btn-add btnsend'}}) }}	
-				{{ form_end(formcierre) }}	
-			</div>
+				<div class="col-2">{{ form_widget(form.cancel, {'attr':{'class' : 'btn btn-danger btn-action', 'data-id':'c', 'data-msge':'Eliminar'}}) }}	</div>
+				<div class="col-2">{{ form_widget(form.pausa, {'attr':{'class' : 'btn btn-warning btn-action', 'data-id':'p', 'data-msge':'Pausar'}}) }}</div>
+				<div class="col-2">{{ form_widget(form.save, {'attr':{'class' : 'btn btn-primary btn-action', 'data-id':'s', 'data-msge':'Guardar'}}) }}</div>			
 		</div>
-	</span>
-	{% endif %}
+		{{ form_end(form) }}	
 </div>
 {% endblock %}
 {% block javascripts %}
@@ -142,7 +129,31 @@
 																				}
 																			}
 																		});
-																	});									
+																	});		
+
+								   $('.btn-action').click(function(event){
+								   											event.preventDefault();
+								   											var btn = $(this);
+								   											$('#form_accion').val(btn.data('id'));
+																            bootbox.confirm({
+																                message: "Seguro "+btn.data('msge')+" la factura?",
+																                buttons: {
+																                    confirm: {
+																                        label: 'Si',
+																                        className: 'btn-success'
+																                    },
+																                    cancel: {
+																                        label: 'No',
+																                        className: 'btn-danger'
+																                    }
+																                },
+																                callback: function (result) {
+																                    if (result == true){											
+																                    	$('.formAction').submit();
+																					}
+																				}
+																			});
+								   });							
 		});
 	</script>
 	
