@@ -4,5 +4,6 @@ services:
         arguments: ['@security.context', '@doctrine']
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
-    print_pdf:
-        class:        Mant\AlmacenBundle\Entity\movimientos\FPDF   
+    app.fpdf:
+        class: Mant\AlmacenBundle\Services\fpdf\FPDF
+        arguments: ["null"]

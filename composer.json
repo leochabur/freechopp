@@ -23,7 +23,8 @@
         "symfony/http-foundation": "3.",
         "knplabs/knp-paginator-bundle": "^2.8",
         "symfony/security": "~2.6",
-        "friendsofsymfony/jsrouting-bundle": "^2.2"
+        "friendsofsymfony/jsrouting-bundle": "^2.2",
+        "luecano/numero-a-letras": "^1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

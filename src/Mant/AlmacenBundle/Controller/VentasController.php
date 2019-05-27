@@ -190,16 +190,89 @@ class VentasController extends Controller
             $debito->setCtacte($ctaCte);
             $em->persist($debito);  
             $em->flush();           
-            $this->addFlash('response',"La fcatura se ha generado exitosamente!!");
-        /*    $pdf = $this->get('print_pdf');
-            return new Response($pdf->Output(), 200, array(
-            'Content-Type' => 'application/pdf'));   */         
+            //$this->addFlash('response',"La fcatura se ha generado exitosamente!!");  
 
-            return $this->redirectToRoute('mant_almacen_factura_venta');                          
+            return $this->redirectToRoute('mant_almacen_imprimir_comprobante', array('mov' => $factura->getId()));                          
         }
         return new Response($data['accion']);
-
     }   
+
+    public function imprimirComprobanteAction($mov)    
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('MantAlmacenBundle:movimientos\MovimientoStock');
+        $factura = $repository->find($mov);     
+           
+           
+
+        $pdf = $this->get('app.fpdf');
+        $pdf->AliasNbPages();
+        $pdf->AddPage('P', 'A4');
+        $pdf->SetFont('Times','',8);
+        $pdf->SetAutoPageBreak(true,0);      
+        
+        $pdf = $this->setHeader($pdf, $pdf->getX(), $pdf->getY(), $factura);
+        $pdf = $this->setDetalle($pdf, $factura);
+
+        if (count($factura->getItems()) < 14){
+            $pdf->setXY(0,148);
+            $pdf->Line(0,148,210,148);
+            $pdf->setY(150);
+            $pdf = $this->setHeader($pdf, $pdf->getX(), $pdf->getY(), $factura);
+            $pdf = $this->setDetalle($pdf, $factura);            
+        }
+
+        
+        return new Response($pdf->Output(), 200, array('Content-Type' => 'application/pdf'));    
+    }
+
+    private function setDetalle($pdf, $factura)
+    {
+        foreach ($factura->getItems() as $item) {
+            $pdf->Cell(100, 7, $item->getDescripcion(), 'L', 0, 'L', False);
+            $pdf->Cell(30, 7, $item->getCantidad(), 0, 0, 'R', False);        
+            $pdf->Cell(30, 7, '$ '.$item->getPrecioUnitario(), 0, 0, 'R', False);    
+            $pdf->Cell(0, 7, '$ '.$item->getPrecioTotal(), 'R', 1, 'R', False);
+        }
+        $pdf->Cell(0, 7, '$ '.$factura->getImporteTotal(), 1, 1, 'R', False);        
+        return $pdf;
+    }
+
+    private function setHeader($pdf, $x, $y, $mov){
+        $logo = $this->get('kernel')->getRootDir() . '/../web/bundles/mantalmacen/images/masterbus-logo.jpg';
+        $pdf->Cell(90,20,'',1, 0, 'C', False);
+        $pdf->setX($x);
+        $pdf->setY($y+2);  
+        $pdf->Image($logo, $pdf->getX(), $pdf->getY(), 50, 15);   
+        
+
+        $pdf->setXY($x+90, $y);
+        $pdf->SetFont('Times','',10);
+
+        $ax = $pdf->getX();
+        $ay = $pdf->getY();        
+        $pdf->setXY($ax, $ay-2); 
+        $pdf->Write(10,$mov->getDescripcionFormulario());
+        
+        $pdf->setXY($ax, $ay+2);        
+        $pdf->Write(10, "Fecha:     ".$mov->getFecha()->format('d/m/Y'));
+        
+        $pdf->setXY($ax, $ay+6);
+        $pdf->Write(10, "Numero:   ".str_pad($mov->getId(), 8, "0", STR_PAD_LEFT));
+
+        $pdf->setXY($ax, $ay+10);
+        $pdf->SetFont('Times','B',12);
+        $pdf->Write(15, "Cliente:   ".$mov->getCliente());
+
+        $pdf->setXY($x+90, $y);
+        $pdf->Cell(0, 20, '', 1, 1, 'C', False);
+        $pdf->SetFont('Times','',10);
+        $pdf->Cell(100, 7, 'Descripcion', 1, 0, 'L', False);
+        $pdf->Cell(30, 7, 'Cantidad', 1, 0, 'L', False);        
+        $pdf->Cell(30, 7, 'Unitario', 1, 0, 'L', False);    
+        $pdf->Cell(0, 7, 'Total', 1, 1, 'L', False);                     
+        return $pdf;
+    }
 
     private function getFormAddItemNPFactura($item, $cant, $idFact)
     {
