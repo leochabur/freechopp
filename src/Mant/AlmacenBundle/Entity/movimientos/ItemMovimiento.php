@@ -126,6 +126,24 @@ class ItemMovimiento
 
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="facturado", type="decimal", options={"default":0.0})
+     */
+    private $facturado = 0; ///para los items de una Nota de Pedido representa la cantidad que se lleva facturada del mismo
+
+
+    public function updateCantidadFacturada($cant)
+    {
+        $this->facturado+=$cant;
+    }
+
+    public function actualizarItemNotaPedido()
+    {
+        $this->itemNotaPedido->updateCantidadFacturada($this->cantidad);
+    }
+    
+    /**
      * Get id
      *
      * @return integer 
@@ -676,4 +694,27 @@ class ItemMovimiento
         $this->itemsFacturaVenta = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+
+    /**
+     * Set facturado
+     *
+     * @param boolean $facturado
+     * @return ItemMovimiento
+     */
+    public function setFacturado($facturado)
+    {
+        $this->facturado = $facturado;
+
+        return $this;
+    }
+
+    /**
+     * Get facturado
+     *
+     * @return boolean 
+     */
+    public function getFacturado()
+    {
+        return $this->facturado;
+    }
 }

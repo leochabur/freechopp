@@ -172,6 +172,7 @@ class VentasController extends Controller
                 $numero = $options->getProxNumero();
             }
             $factura->setNumeroComprobante($numero);
+            $factura->actualizarItems();
             $numero++;
             $options->setProxNumero($numero);
             ///////////fin recupero numero comprobante///////////////////////   

@@ -126,6 +126,13 @@ class ItemMovimiento
 
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="facturado", type="boolean", options={"default":false})
+     */
+    private $facturado; ///para los items de una Nota de Pedido representa si ya se ha facturado por completo
+
+    /**
      * Get id
      *
      * @return integer 
@@ -137,6 +144,8 @@ class ItemMovimiento
 
     public function getCosto()
     {
+        return $this->articulo->getPrecioCompra();
+        /*
         $i=0;
         $suma=0;
         foreach ($this->itemsOrdenCompra as $value) {
@@ -144,7 +153,7 @@ class ItemMovimiento
             $suma+= $value->getPrecioUnitario();
         }
         $i=$i?$i:1;
-        return ($suma/$i);
+        return ($suma/$i);*/
 
     }
 
@@ -665,5 +674,13 @@ class ItemMovimiento
         return $this->itemsFactura;
     }
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->itemsFacturaVenta = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 }

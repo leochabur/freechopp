@@ -334,6 +334,7 @@ abstract class MovimientoStock
      public abstract function generaMovimientoCtaCte();
      public abstract function getEnteComercial();
      public abstract function deleteItemMovimiento($item);/////para cada instancia del movimiento define si debe o no devolver el stock al articulo correspondiente Ej. para las fcaturas de venta cuando se elimina un item debe devolver el stock del articulo
+     public abstract function actualizarItems(); //para el caso de la factura de venta que actualice la cantidad facturada de la nota de pedido
     /**
      * Set numeroComprobante
      *

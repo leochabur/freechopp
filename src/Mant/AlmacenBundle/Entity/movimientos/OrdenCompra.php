@@ -244,4 +244,9 @@ class OrdenCompra extends MovimientoStock
     {
 
     }       
+
+    public function actualizarItems()
+    {
+
+    }
 }

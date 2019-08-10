@@ -144,4 +144,9 @@ class SalidaStock extends MovimientoStock
     {
         
     }       
+    
+    public function actualizarItems()
+    {
+
+    }
 }

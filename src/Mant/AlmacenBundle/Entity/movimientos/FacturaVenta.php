@@ -33,6 +33,16 @@ class FacturaVenta extends MovimientoStock
      */
     private $notasPedido;  /////representa todas las notas de pedido que son facturadas   
 
+    
+
+    //funcion llamada antes de persisitir el movimiento, actualiza los items del mismo, en especial la factura marca como facturado los items de venta de la nota de pedido
+    public function actualizarItems()
+    {
+        foreach ($this->getItems() as $item) {
+            $item->actualizarItemNotaPedido();
+        }
+
+    }
 
 
     public function __construct()

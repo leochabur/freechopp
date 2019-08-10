@@ -42,6 +42,7 @@ mant_almacen_action_factura_venta:
     defaults: { _controller: MantAlmacenBundle:Ventas:actionFacturaVenta }   
     methods: POST   
 
-mant_almacen_imprimir_comprobante:
+mant_almacen_imprimir_comprobante: 
     path:     /print/{mov}
     defaults: { _controller: MantAlmacenBundle:Ventas:imprimirComprobante }       
+

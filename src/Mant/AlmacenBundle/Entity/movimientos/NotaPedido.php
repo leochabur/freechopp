@@ -188,4 +188,9 @@ class NotaPedido extends MovimientoStock
     {
 
     }       
+
+    public function actualizarItems()
+    {
+
+    }
 }

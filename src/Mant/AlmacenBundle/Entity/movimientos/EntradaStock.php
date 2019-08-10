@@ -183,4 +183,9 @@ class EntradaStock extends MovimientoStock
     {
         
     }   
+
+    public function actualizarItems()
+    {
+
+    }
 }
